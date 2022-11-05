@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link href="~/manifest.json" rel="manifest" />
+    <link href="~/android/android-launchericon-512-512.png" rel="icon"/>
+</head>
+<body>
+    <header>
+        <h1>Hola pipo</h1>
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+    <script>
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.register("/Sw.js");
+        }
+    </script>
+</body>
+</html>
