@@ -108,6 +108,8 @@ namespace APIalumnos.Models
                 entity.HasCharSet("utf8mb3")
                     .UseCollation("utf8mb3_general_ci");
 
+                entity.HasIndex(e => e.IdDocenteAviso, "FK_avisostable_docentestable");
+
                 entity.HasIndex(e => e.IdMateriaAviso, "FK_avisostable_materiastable");
 
                 entity.Property(e => e.Id)
@@ -119,6 +121,10 @@ namespace APIalumnos.Models
                     .HasColumnName("fecha")
                     .HasDefaultValueSql("current_timestamp()");
 
+                entity.Property(e => e.IdDocenteAviso)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("idDocenteAviso");
+
                 entity.Property(e => e.IdMateriaAviso)
                     .HasColumnType("int(11)")
                     .HasColumnName("idMateriaAviso");
@@ -128,6 +134,12 @@ namespace APIalumnos.Models
                     .HasMaxLength(360)
                     .HasColumnName("mensajeAviso")
                     .HasDefaultValueSql("''");
+
+                entity.HasOne(d => d.IdDocenteAvisoNavigation)
+                    .WithMany(p => p.Avisostable)
+                    .HasForeignKey(d => d.IdDocenteAviso)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_avisostable_docentestable");
 
                 entity.HasOne(d => d.IdMateriaAvisoNavigation)
                     .WithMany(p => p.Avisostable)

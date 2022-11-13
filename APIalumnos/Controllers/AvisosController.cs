@@ -26,9 +26,26 @@ namespace APIalumnos.Controllers
             {
                 x.Id,
                 x.MensajeAviso,
-                x.Fecha
+                x.Fecha,
+                x.IdMateriaAviso,
+                x.IdDocenteAviso
             }
             ));
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var aviso = repo.Get(id);
+            return Ok( new
+            {
+                aviso.Id,
+                aviso.MensajeAviso,
+                aviso.Fecha,
+                aviso.IdMateriaAviso,
+                aviso.IdDocenteAviso
+            }
+            );
         }
     }
 }

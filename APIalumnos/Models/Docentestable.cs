@@ -9,6 +9,7 @@ namespace APIalumnos.Models
     {
         public Docentestable()
         {
+            Avisostable = new HashSet<Avisostable>();
             Materiastable = new HashSet<Materiastable>();
         }
 
@@ -17,6 +18,7 @@ namespace APIalumnos.Models
         public string Usuario { get; set; }
         public string Contrasena { get; set; }
 
+        public virtual ICollection<Avisostable> Avisostable { get; set; }
         public virtual ICollection<Materiastable> Materiastable { get; set; }
     }
 }
