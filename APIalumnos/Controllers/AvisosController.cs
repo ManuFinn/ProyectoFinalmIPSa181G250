@@ -27,8 +27,8 @@ namespace APIalumnos.Controllers
                 x.Id,
                 x.MensajeAviso,
                 x.Fecha,
-                x.IdMateriaAviso,
-                x.IdDocenteAviso
+                x.IdMateriaAvisoNavigation,
+                x.IdDocenteAvisoNavigation
             }
             ));
         }
@@ -37,15 +37,37 @@ namespace APIalumnos.Controllers
         public IActionResult Get(int id)
         {
             var aviso = repo.Get(id);
-            return Ok( new
-            {
+            if(aviso != null) { 
+            return Ok( new {
                 aviso.Id,
                 aviso.MensajeAviso,
                 aviso.Fecha,
                 aviso.IdMateriaAviso,
                 aviso.IdDocenteAviso
+            });}
+            else {
+                return NotFound();
             }
-            );
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Avisostable av)
+        {
+            try
+            {
+                av.Id = 0;
+                if(repo.IsValid(av, out List<string> errores))
+                {
+                    repo.Insert(av);
+                    return Ok();
+                }
+                else { return BadRequest(errores); }
+            }
+            catch(Exception ex)
+            {
+                if (ex.InnerException != null) { return StatusCode(500, ex.InnerException.Message); }
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
