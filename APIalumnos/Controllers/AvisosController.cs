@@ -28,7 +28,9 @@ namespace APIalumnos.Controllers
                 x.MensajeAviso,
                 x.Fecha,
                 x.IdMateriaAviso,
-                x.IdDocenteAviso
+                x.IdDocenteAviso,
+                x.IdDocenteAvisoNavigation.NombreDocente,
+                x.IdMateriaAvisoNavigation.NombreMateria
             }
             ));
         }
@@ -55,13 +57,19 @@ namespace APIalumnos.Controllers
         {
             try
             {
-                av.Id = 0;
-                if(repo.IsValid(av, out List<string> errores))
+                if (repo.IsValid(av, out List<string> errores))
                 {
                     repo.Insert(av);
-                    return Ok();
+                    return Ok( new
+                    {
+                        av.Id,
+                        av.Fecha,
+                        av.MensajeAviso,
+                        av.IdDocenteAviso,
+                        av.IdMateriaAviso
+                    });
                 }
-                else { return BadRequest(errores); }
+                else { return Ok(); }
             }
             catch(Exception ex)
             {

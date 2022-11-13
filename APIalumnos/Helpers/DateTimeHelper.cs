@@ -6,5 +6,7 @@ public static class DateTimeHelper
     {
         return TimeZoneInfo.ConvertTime(day, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time (Mexico)"));
     }
-} //PACIFIC STANDAET TIME (MEXICO)
+}
+//"Eastern Standard Time (Mexico)"
+//PACIFIC STANDAET TIME (MEXICO)
 

@@ -1,5 +1,8 @@
 ﻿using APIalumnos.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace APIalumnos.Repositories
 {
@@ -7,14 +10,16 @@ namespace APIalumnos.Repositories
     {
         public AvisosRepository(DbContext context) : base(context) { }
 
+        //Context.Table.Include(x => x.NavigationProperty).LinqMethod(...);
+
         public override IEnumerable<Avisostable> GetAll()
         {
-            return base.GetAll();
+            return Context.Set<Avisostable>().Include(x => x.IdDocenteAvisoNavigation).Include(x => x.IdMateriaAvisoNavigation);
         }
 
         public override void Insert(Avisostable entity)
         {
-            entity.Fecha = DateTime.Now.ToMexicoTime();
+            entity.Fecha = DateTime.Now.ToMexicoTime().AddHours(-1);
             entity.Id = 0;
             base.Insert(entity);
         }

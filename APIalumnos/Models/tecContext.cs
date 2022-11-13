@@ -27,7 +27,7 @@ namespace APIalumnos.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql("server=127.0.0.1;database=tec;user=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.10.1-mariadb"));
+               optionsBuilder.UseMySql("server=127.0.0.1;database=tec;user=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.10.1-mariadb"));
             }
         }
 
@@ -117,7 +117,7 @@ namespace APIalumnos.Models
                     .HasColumnName("id");
 
                 entity.Property(e => e.Fecha)
-                    .HasColumnType("datetime")
+                    .HasColumnType("timestamp")
                     .HasColumnName("fecha");
 
                 entity.Property(e => e.IdDocenteAviso)
