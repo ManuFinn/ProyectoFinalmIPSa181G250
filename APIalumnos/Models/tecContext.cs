@@ -118,8 +118,7 @@ namespace APIalumnos.Models
 
                 entity.Property(e => e.Fecha)
                     .HasColumnType("datetime")
-                    .HasColumnName("fecha")
-                    .HasDefaultValueSql("current_timestamp()");
+                    .HasColumnName("fecha");
 
                 entity.Property(e => e.IdDocenteAviso)
                     .HasColumnType("int(11)")

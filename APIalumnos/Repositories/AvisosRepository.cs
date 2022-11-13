@@ -35,10 +35,10 @@ namespace APIalumnos.Repositories
 
             DateTime fechaActual = DateTime.Now;
 
-            if(string.IsNullOrEmpty(entity.MensajeAviso) || entity.Fecha != fechaActual)
-            {
-                validationErrors.Add("Error 418. Prepara esas nalgas porque...");
-            }
+            //if(string.IsNullOrEmpty(entity.MensajeAviso) || entity.Fecha != fechaActual)
+            //{
+            //    validationErrors.Add("Error 418. Prepara esas nalgas porque...");
+            //}
             return validationErrors.Count == 0;
         }
     }

@@ -27,8 +27,8 @@ namespace APIalumnos.Controllers
                 x.Id,
                 x.MensajeAviso,
                 x.Fecha,
-                x.IdMateriaAvisoNavigation,
-                x.IdDocenteAvisoNavigation
+                x.IdMateriaAviso,
+                x.IdDocenteAviso
             }
             ));
         }
