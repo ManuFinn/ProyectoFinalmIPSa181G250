@@ -9,7 +9,8 @@ namespace APIalumnos.Models
     {
         public int Id { get; set; }
         public string MensajeAviso { get; set; }
-        public DateTime Fecha { get; set; }
+        public DateTime? Fecha { get; set; }
+        public DateTime? FechaUltAct { get; set; }
         public int IdMateriaAviso { get; set; }
         public int IdDocenteAviso { get; set; }
 

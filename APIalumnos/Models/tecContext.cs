@@ -46,6 +46,8 @@ namespace APIalumnos.Models
                     .HasColumnType("int(11)")
                     .HasColumnName("id");
 
+                entity.Property(e => e.Borrado).HasColumnName("borrado");
+
                 entity.Property(e => e.Contrasena)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -120,6 +122,10 @@ namespace APIalumnos.Models
                     .HasColumnType("timestamp")
                     .HasColumnName("fecha");
 
+                entity.Property(e => e.FechaUltAct)
+                    .HasColumnType("timestamp")
+                    .HasColumnName("fechaUltAct");
+
                 entity.Property(e => e.IdDocenteAviso)
                     .HasColumnType("int(11)")
                     .HasColumnName("idDocenteAviso");
@@ -157,6 +163,10 @@ namespace APIalumnos.Models
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
                     .HasColumnName("id");
+
+                entity.Property(e => e.Borrado)
+                    .HasColumnType("tinyint(4)")
+                    .HasColumnName("borrado");
 
                 entity.Property(e => e.Contrasena)
                     .IsRequired()

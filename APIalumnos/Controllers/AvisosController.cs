@@ -1,6 +1,7 @@
 ﻿using APIalumnos.Models;
 using APIalumnos.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace APIalumnos.Controllers
 {
@@ -27,8 +28,7 @@ namespace APIalumnos.Controllers
                 x.Id,
                 x.MensajeAviso,
                 x.Fecha,
-                x.IdMateriaAviso,
-                x.IdDocenteAviso,
+                x.FechaUltAct,
                 x.IdDocenteAvisoNavigation.NombreDocente,
                 x.IdMateriaAvisoNavigation.NombreMateria
             }
@@ -39,15 +39,20 @@ namespace APIalumnos.Controllers
         public IActionResult Get(int id)
         {
             var aviso = repo.Get(id);
-            if(aviso != null) { 
-            return Ok( new {
-                aviso.Id,
-                aviso.MensajeAviso,
-                aviso.Fecha,
-                aviso.IdMateriaAviso,
-                aviso.IdDocenteAviso
-            });}
-            else {
+            if (aviso != null)
+            {
+                return Ok(aviso.Select(x => new
+                {
+                    x.Id,
+                    x.MensajeAviso,
+                    x.Fecha,
+                    x.FechaUltAct,
+                    x.IdDocenteAvisoNavigation.NombreDocente,
+                    x.IdMateriaAvisoNavigation.NombreMateria
+                }));
+            }
+            else
+            {
                 return NotFound();
             }
         }
@@ -60,7 +65,7 @@ namespace APIalumnos.Controllers
                 if (repo.IsValid(av, out List<string> errores))
                 {
                     repo.Insert(av);
-                    return Ok( new
+                    return Ok(new
                     {
                         av.Id,
                         av.Fecha,
@@ -71,7 +76,56 @@ namespace APIalumnos.Controllers
                 }
                 else { return Ok(); }
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null) { return StatusCode(500, ex.InnerException.Message); }
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult Put([FromBody] Avisostable av)
+        {
+            try
+            {
+                var aviso = repo.GetPut(av.Id);
+                if (aviso != null)
+                {
+                    if (repo.IsValid(av, out List<string> errores))
+                    {
+                        aviso.MensajeAviso = av.MensajeAviso;
+                        repo.Update(aviso);
+                        return Ok();
+                    }
+                    else { return BadRequest(errores); }
+                }
+                else { NotFound(); }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null) { return StatusCode(500, ex.InnerException.Message); }
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody] Avisostable av)
+        {
+            try
+            {
+                var aviso = repo.GetPut(av.Id);
+                if (aviso != null)
+                {
+                        repo.Delete(aviso);
+                        return Ok();
+                }
+                else { NotFound(); }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
             {
                 if (ex.InnerException != null) { return StatusCode(500, ex.InnerException.Message); }
                 return StatusCode(500, ex.Message);

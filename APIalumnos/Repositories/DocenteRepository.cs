@@ -12,11 +12,11 @@ namespace APIalumnos.Repositories
             return base.GetAll();
         }
 
-        public override void Insert(Docentestable entity)
-        {
-            //entity.Fecha = DateTime.Now.ToMexicoTime();
-            entity.Id = 0;
-            base.Insert(entity);
-        }
+        //public override void Insert(Docentestable entity)
+        //{
+        //    //entity.Fecha = DateTime.Now.ToMexicoTime();
+        //    entity.Id = 0;
+        //    base.Insert(entity);
+        //}
     }
 }

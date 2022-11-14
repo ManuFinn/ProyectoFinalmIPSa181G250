@@ -52,19 +52,19 @@ namespace APIalumnos.Controllers
             
         }
 
-        [HttpPost]
-        public IActionResult Post([FromBody] Docentestable av)
-        {
-            try
-            {
-                    repo.Insert(av);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException != null) { return StatusCode(500, ex.InnerException.Message); }
-                return StatusCode(500, ex.Message);
-            }
-        }
+        //[HttpPost]
+        //public IActionResult Post([FromBody] Docentestable av)
+        //{
+        //    try
+        //    {
+        //        repo.Insert(av);
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (ex.InnerException != null) { return StatusCode(500, ex.InnerException.Message); }
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
     }
 }

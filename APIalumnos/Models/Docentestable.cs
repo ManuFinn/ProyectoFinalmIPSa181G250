@@ -17,6 +17,7 @@ namespace APIalumnos.Models
         public string NombreDocente { get; set; }
         public string Usuario { get; set; }
         public string Contrasena { get; set; }
+        public sbyte Borrado { get; set; }
 
         public virtual ICollection<Avisostable> Avisostable { get; set; }
         public virtual ICollection<Materiastable> Materiastable { get; set; }

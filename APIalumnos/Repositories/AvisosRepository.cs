@@ -14,18 +14,31 @@ namespace APIalumnos.Repositories
 
         public override IEnumerable<Avisostable> GetAll()
         {
-            return Context.Set<Avisostable>().Include(x => x.IdDocenteAvisoNavigation).Include(x => x.IdMateriaAvisoNavigation);
+            return Context.Set<Avisostable>()
+                .Include(x => x.IdDocenteAvisoNavigation)
+                .Include(x => x.IdMateriaAvisoNavigation)
+                .OrderBy(x=> x.Id);
         }
 
+        public IEnumerable<Avisostable> Get(int id)
+        {
+            return Context
+                .Set<Avisostable>()
+                .Include(x => x.IdDocenteAvisoNavigation)
+                .Include(x => x.IdMateriaAvisoNavigation)
+                .Where(x => x.Id == id);
+        }
         public override void Insert(Avisostable entity)
         {
             entity.Fecha = DateTime.Now.ToMexicoTime().AddHours(-1);
             entity.Id = 0;
+            entity.FechaUltAct = null;
             base.Insert(entity);
         }
 
         public override void Update(Avisostable entity)
         {
+            entity.FechaUltAct = DateTime.Now.ToMexicoTime().AddHours(-1);
             base.Update(entity);
         }
 
@@ -40,10 +53,10 @@ namespace APIalumnos.Repositories
 
             DateTime fechaActual = DateTime.Now;
 
-            //if(string.IsNullOrEmpty(entity.MensajeAviso) || entity.Fecha != fechaActual)
-            //{
-            //    validationErrors.Add("Error 418. Prepara esas nalgas porque...");
-            //}
+            if (string.IsNullOrEmpty(entity.MensajeAviso))
+            {
+                validationErrors.Add("Error 418. Prepara esas nalgas porque...");
+            }
             return validationErrors.Count == 0;
         }
     }

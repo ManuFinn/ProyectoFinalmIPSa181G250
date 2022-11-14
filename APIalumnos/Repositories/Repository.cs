@@ -23,6 +23,11 @@ namespace APIalumnos.Repositories
             return Context.Find<T>(id);
         }
 
+        public virtual T GetPut(object id)
+        {
+            return Context.Find<T>(id);
+        }
+
         public virtual void Insert(T entity)
         {
             Context.Add(entity);
