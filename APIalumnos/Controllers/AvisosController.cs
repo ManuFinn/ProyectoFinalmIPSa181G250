@@ -1,11 +1,13 @@
 ﻿using APIalumnos.Models;
 using APIalumnos.Repositories;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace APIalumnos.Controllers
 {
     [Route("api/[controller]")]
+
     [ApiController]
     public class AvisosController : ControllerBase
     {
@@ -35,10 +37,32 @@ namespace APIalumnos.Controllers
             ));
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("GetById/{id}")]
+        public IActionResult GetById(int id)
         {
-            var aviso = repo.Get(id);
+            var aviso = repo.GetbyId(id);
+            if (aviso != null)
+            {
+                return Ok(aviso.Select(x => new
+                {
+                    x.Id,
+                    x.MensajeAviso,
+                    x.Fecha,
+                    x.FechaUltAct,
+                    x.IdDocenteAvisoNavigation.NombreDocente,
+                    x.IdMateriaAvisoNavigation.NombreMateria
+                }));
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("GetByMateria/{materia}")]
+        public IActionResult GetByMateria(string materia)
+        {
+            var aviso = repo.GetByMateria(materia);
             if (aviso != null)
             {
                 return Ok(aviso.Select(x => new

@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Docente\" />
     <Folder Include="wwwroot\CSS\" />
-    <Folder Include="wwwroot\Scripts\" />
   </ItemGroup>
 
   <ItemGroup>

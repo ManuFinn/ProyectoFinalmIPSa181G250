@@ -20,7 +20,7 @@ namespace APIalumnos.Repositories
                 .OrderBy(x=> x.Id);
         }
 
-        public IEnumerable<Avisostable> Get(int id)
+        public IEnumerable<Avisostable> GetbyId(int id)
         {
             return Context
                 .Set<Avisostable>()
@@ -28,6 +28,16 @@ namespace APIalumnos.Repositories
                 .Include(x => x.IdMateriaAvisoNavigation)
                 .Where(x => x.Id == id);
         }
+
+        public IEnumerable<Avisostable> GetByMateria(string materia)
+        {
+            return Context
+                .Set<Avisostable>()
+                .Include(x => x.IdDocenteAvisoNavigation)
+                .Include(x => x.IdMateriaAvisoNavigation)
+                .Where(x => x.IdMateriaAvisoNavigation.NombreMateria == materia);
+        }
+
         public override void Insert(Avisostable entity)
         {
             entity.Fecha = DateTime.Now.ToMexicoTime().AddHours(-1);

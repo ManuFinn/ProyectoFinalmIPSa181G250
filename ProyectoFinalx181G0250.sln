@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoFinalx181G0250", "ProyectoFinalx181G0250\ProyectoFinalx181G0250.csproj", "{6154ED6F-D33A-4302-A59C-3EA70EF79185}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIalumnos", "APIalumnos\APIalumnos.csproj", "{4AD92755-52A4-4CC4-8EC8-8971BAF1CA9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIalumnos", "APIalumnos\APIalumnos.csproj", "{4AD92755-52A4-4CC4-8EC8-8971BAF1CA9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,15 +10,24 @@ var builder = WebApplication.CreateBuilder(args);
 //            Configuration.GetConnectionString("Festify")));
 
 builder.Services.AddDbContext<tecContext>(opt =>
-opt.UseMySql("server=127.0.0.1;database=tec;user=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.10.1-mariadb")));
+opt.UseMySql("server=204.93.216.11;database=itesrcne_jeancarlo;user=itesrcne_jeancar;password=2G@4ykMwqR3xyCZ", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.10.1-mariadb")));
+
+builder.Services.AddCors();
 
 builder.Services.AddMvc();
 
 builder.Services.AddControllers();
 
+
+
 var app = builder.Build();
 
-
+app.UseCors(x => x
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed(origin => true)
+                    .AllowCredentials()
+                    );
 
 app.UseDeveloperExceptionPage();
 
@@ -30,6 +39,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapDefaultControllerRoute();
 });
+
 
 
 app.Run();
