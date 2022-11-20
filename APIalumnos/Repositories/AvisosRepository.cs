@@ -37,6 +37,14 @@ namespace APIalumnos.Repositories
                 .Include(x => x.IdMateriaAvisoNavigation)
                 .Where(x => x.IdMateriaAvisoNavigation.NombreMateria == materia);
         }
+        public IEnumerable<Avisostable> GetByMaterias(int[] materias)
+        {
+            return Context
+                .Set<Avisostable>()
+                .Include(x => x.IdDocenteAvisoNavigation)
+                .Include(x => x.IdMateriaAvisoNavigation)
+                .Where(x => materias.Contains(x.IdMateriaAvisoNavigation.Id));
+        }
 
         public override void Insert(Avisostable entity)
         {

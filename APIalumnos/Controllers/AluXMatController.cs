@@ -21,17 +21,35 @@ namespace APIalumnos.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var avisos = repo.GetAll();
-            return Ok(avisos.Select(x => new
+            var listado = repo.GetAll();
+            return Ok(listado.Select(x => new
             {
                 x.Id,
-                x.MensajeAviso,
-                x.Fecha,
-                x.FechaUltAct,
-                x.IdDocenteAvisoNavigation.NombreDocente,
-                x.IdMateriaAvisoNavigation.NombreMateria
+                x.IdMateriaNavigation.NombreMateria,
+                x.IdAlumnoNavigation.NombreAlumno
             }
             ));
         }
+
+        [HttpGet("GetByAlumno/{id}")]
+        public IActionResult Get(int id)
+        {
+            var listado = repo.GetByAlumno(id);
+            if (listado != null)
+            {
+                return Ok(listado.Select(x => new
+                {
+                    x.Id,
+                    x.IdMateriaNavigation.NombreMateria,
+                    x.IdAlumnoNavigation.NombreAlumno
+                }));
+            }
+            else
+            {
+                return NotFound();
+            }   
+        }
+
+
     }
 }

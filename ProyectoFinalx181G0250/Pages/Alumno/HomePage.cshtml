@@ -5,8 +5,10 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div>
-    id="divCanales"
+<div id="divCanales">
+    <div>
+        <button class="btnCanal" onclick="pipo(this.innerHTML)">Canal General</button>
+    </div>
 </div>
 
 <button id="btnActualizar"> Actualizar </button>
@@ -20,5 +22,10 @@
         <label> </label>
         <label> </label>
         <label> </label>
+    </div>
+</template>
+<template id="plantillaCanal">
+    <div>
+        <button class="btnCanal" onclick="pipo(this.innerHTML)"></button>
     </div>
 </template>

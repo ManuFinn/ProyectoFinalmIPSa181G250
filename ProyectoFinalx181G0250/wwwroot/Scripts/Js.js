@@ -1,8 +1,17 @@
-﻿const api = "https://jeancarlo.itesrc.net/api";
+﻿
+
+const api = "https://jeancarlo.itesrc.net/api";
+const apiMaterias = "https://jeancarlo.itesrc.net/api/AluXMat/GetByAlumno/";
+const apiAvisosByMateria = "https://jeancarlo.itesrc.net/api/Avisos/GetByMateria/";
 
 const feed = document.getElementById("divAvisos");
-
 const plantillaAviso = document.getElementById("plantillaAviso");
+
+
+const menuChannels = document.getElementById("divCanales");
+const plantillaCanal = document.getElementById("plantillaCanal");
+
+
 
 const btnActualizar = document.getElementById("btnActualizar");
 
@@ -11,19 +20,75 @@ btnActualizar.addEventListener("click", function (event) {
     console.log("Actualizado prro");
 });
 
+localStorage.Canal = "Canal General";
+
+function pipo(name) {
+    console.log(name);
+    localStorage.Canal = name;
+    mostrarAvisos();
+}
+
 localStorage.idAlumno = 1;
 console.log(localStorage.idAlumno);
+
 
 function Newest(a, b) {
     return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
 }
 
-function ByUser(datos) {
-    
+
+async function prueba() {
+    var result1 = await fetch(apiAvisosByMateria + "A");
+    var result2 = await fetch(apiAvisosByMateria + "Z");
+
+    var res = result1.concat(result2);
+    console.log(res);
 }
 
+prueba();
+
+async function mostrarCanales() {
+    var result = await fetch(apiMaterias + localStorage.idAlumno);
+    if (result.ok) {
+        var datos = await result.json();
+
+        datos.sort(function (a, b) {
+            if (b.nombreMateria > a.nombreMateria) {
+                return -1;
+            }
+            if (a.nombreMateria > b.nombreMateria) {
+                return 1;
+            }
+            return 0;
+        });
+
+        console.log(datos);
+        mostrarCanalesNombres(datos);
+    }
+}
+
+function mostrarCanalesNombres(datos) {
+    for (var x = 0; x < datos.length; x++) {
+        var clone = plantillaCanal.content.children[0].cloneNode(true);
+        menuChannels.append(clone);
+    }
+    
+    datos.forEach((o, i) => {
+        let div = menuChannels.children[i+1];
+        div.children[0].innerHTML = o.nombreMateria;
+    });
+}
+
+
 async function mostrarAvisos() {
-    var result = await fetch(api + "/avisos/");
+
+    if (localStorage.Canal == "Canal General") {
+        var result = await fetch(api + "/avisos/");
+    }
+    else {
+        var result = await fetch(apiAvisosByMateria + localStorage.Canal);
+    }
+    
     if (result.ok) {
         var datos = await result.json();
 
@@ -65,4 +130,5 @@ function mostrarAvisosDatos(datos) {
     });
 }
 
-mostrarAvisos();
+mostrarCanales();
+/*mostrarAvisos();*/

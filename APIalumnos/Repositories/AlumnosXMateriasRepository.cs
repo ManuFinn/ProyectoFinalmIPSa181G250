@@ -23,7 +23,7 @@ namespace APIalumnos.Repositories
             return Context.Set<Alumnoxmateriatable>()
                 .Include(x => x.IdAlumnoNavigation)
                 .Include(x => x.IdMateriaNavigation)
-                .OrderBy(x => x.IdAlumnoNavigation.Id == id);
+                .Where(x => id == x.IdAlumnoNavigation.Id);
         }
 
 

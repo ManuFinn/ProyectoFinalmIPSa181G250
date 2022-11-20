@@ -1,6 +1,5 @@
 ﻿using APIalumnos.Models;
 using APIalumnos.Repositories;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 //using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -63,6 +62,28 @@ namespace APIalumnos.Controllers
         public IActionResult GetByMateria(string materia)
         {
             var aviso = repo.GetByMateria(materia);
+            if (aviso != null)
+            {
+                return Ok(aviso.Select(x => new
+                {
+                    x.Id,
+                    x.MensajeAviso,
+                    x.Fecha,
+                    x.FechaUltAct,
+                    x.IdDocenteAvisoNavigation.NombreDocente,
+                    x.IdMateriaAvisoNavigation.NombreMateria
+                }));
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("GetByMaterias/{materias}")]
+        public IActionResult GetByMaterias(int[] materias)
+        {
+            var aviso = repo.GetByMaterias(materias);
             if (aviso != null)
             {
                 return Ok(aviso.Select(x => new
