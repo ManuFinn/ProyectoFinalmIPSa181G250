@@ -26,6 +26,7 @@ namespace APIalumnos.Controllers
             {
                 x.Id,
                 x.IdMateriaNavigation.NombreMateria,
+                x.IdMateriaNavigation,
                 x.IdAlumnoNavigation.NombreAlumno
             }
             ));
@@ -41,6 +42,7 @@ namespace APIalumnos.Controllers
                 {
                     x.Id,
                     x.IdMateriaNavigation.NombreMateria,
+                    x.IdMateria,
                     x.IdAlumnoNavigation.NombreAlumno
                 }));
             }

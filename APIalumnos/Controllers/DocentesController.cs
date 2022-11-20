@@ -21,7 +21,7 @@ namespace APIalumnos.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var docentes = repo.GetAll();
+            var docentes = repo.GetAll().Where(x => x.Borrado == false);
             return Ok(docentes.Select(x => new
             {
                 x.Id,

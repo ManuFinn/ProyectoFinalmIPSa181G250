@@ -1,6 +1,7 @@
 ﻿using APIalumnos.Models;
 using APIalumnos.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 //using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace APIalumnos.Controllers
@@ -81,9 +82,12 @@ namespace APIalumnos.Controllers
         }
 
         [HttpGet("GetByMaterias/{materias}")]
-        public IActionResult GetByMaterias(int[] materias)
+        public IActionResult GetByMaterias(string materias)
         {
-            var aviso = repo.GetByMaterias(materias);
+            int[] numbers = Regex.Matches(materias, "(-?[0-9]+)")
+                .OfType<Match>().Select(m => int.Parse(m.Value))
+                .ToArray();
+            var aviso = repo.GetByMaterias(numbers);
             if (aviso != null)
             {
                 return Ok(aviso.Select(x => new

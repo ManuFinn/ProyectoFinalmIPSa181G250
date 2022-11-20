@@ -11,7 +11,7 @@ const plantillaAviso = document.getElementById("plantillaAviso");
 const menuChannels = document.getElementById("divCanales");
 const plantillaCanal = document.getElementById("plantillaCanal");
 
-
+const materiasUsuario = "";
 
 const btnActualizar = document.getElementById("btnActualizar");
 
@@ -37,16 +37,6 @@ function Newest(a, b) {
 }
 
 
-async function prueba() {
-    var result1 = await fetch(apiAvisosByMateria + "A");
-    var result2 = await fetch(apiAvisosByMateria + "Z");
-
-    var res = result1.concat(result2);
-    console.log(res);
-}
-
-prueba();
-
 async function mostrarCanales() {
     var result = await fetch(apiMaterias + localStorage.idAlumno);
     if (result.ok) {
@@ -62,7 +52,8 @@ async function mostrarCanales() {
             return 0;
         });
 
-        console.log(datos);
+
+        mostrarAvisos(datos);
         mostrarCanalesNombres(datos);
     }
 }
@@ -80,10 +71,22 @@ function mostrarCanalesNombres(datos) {
 }
 
 
-async function mostrarAvisos() {
+
+
+async function mostrarAvisos(materias) {
 
     if (localStorage.Canal == "Canal General") {
-        var result = await fetch(api + "/avisos/");
+        var result = await fetch(apiMaterias + localStorage.idAlumno);
+        if (result.ok) {
+            var materias = await result.json();
+        }
+        let url = "https://jeancarlo.itesrc.net/api/Avisos/GetByMaterias/";
+
+        materias.forEach(element => {
+            url += "a";
+            url += element.idMateria;
+        });
+        var result = await fetch(url);
     }
     else {
         var result = await fetch(apiAvisosByMateria + localStorage.Canal);
@@ -93,7 +96,6 @@ async function mostrarAvisos() {
         var datos = await result.json();
 
         datos.sort(Newest);
-        console.log(datos);
         mostrarAvisosDatos(datos);
 
     }
@@ -130,5 +132,6 @@ function mostrarAvisosDatos(datos) {
     });
 }
 
+
 mostrarCanales();
-/*mostrarAvisos();*/
+mostrarAvisos();
