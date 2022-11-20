@@ -152,9 +152,7 @@ namespace APIalumnos.Models
                     .HasColumnType("int(11)")
                     .HasColumnName("id");
 
-                entity.Property(e => e.Borrado)
-                    .HasColumnType("tinyint(4)")
-                    .HasColumnName("borrado");
+                entity.Property(e => e.Borrado).HasColumnName("borrado");
 
                 entity.Property(e => e.Contrasena)
                     .IsRequired()

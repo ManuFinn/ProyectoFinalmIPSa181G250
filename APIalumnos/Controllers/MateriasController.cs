@@ -5,17 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace APIalumnos.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController] 
-    public class AluXMatController : ControllerBase 
+    [ApiController]
+    public class MateriasController : ControllerBase
     {
         public tecContext Context { get; set; }
 
-        AlumnosXMateriasRepository repo;
 
-        public AluXMatController(tecContext con)
+        MateriasRepository repo;
+
+        public MateriasController(tecContext con)
         {
             Context = con;
-            repo = new AlumnosXMateriasRepository(Context);
+            repo = new MateriasRepository(Context);
         }
 
         [HttpGet]
@@ -25,33 +26,31 @@ namespace APIalumnos.Controllers
             return Ok(listado.Select(x => new
             {
                 x.Id,
-                x.IdMateriaNavigation.NombreMateria,
-                x.IdMateriaNavigation,
-                x.IdAlumnoNavigation.NombreAlumno
+                x.NombreMateria,
+                x.IdProfesorMateriaNavigation.NombreDocente,
+                x.IdProfesorMateria
             }
             ));
         }
 
-        [HttpGet("GetByAlumno/{id}")]
+        [HttpGet("GetByDocente/{id}")]
         public IActionResult Get(int id)
         {
-            var listado = repo.GetByAlumno(id);
+            var listado = repo.GetByDocente(id);
             if (listado != null)
             {
                 return Ok(listado.Select(x => new
                 {
                     x.Id,
-                    x.IdMateriaNavigation.NombreMateria,
-                    x.IdMateria,
-                    x.IdAlumnoNavigation.NombreAlumno
+                    x.NombreMateria,
+                    x.IdProfesorMateriaNavigation.NombreDocente,
+                    x.IdProfesorMateria
                 }));
             }
             else
             {
                 return NotFound();
-            }   
+            }
         }
-
-
     }
 }
