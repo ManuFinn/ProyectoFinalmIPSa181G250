@@ -1,8 +1,5 @@
 ﻿
-
-const api = "https://jeancarlo.itesrc.net/api";
-const apiMaterias = "https://jeancarlo.itesrc.net/api/AluXMat/GetByAlumno/";
-const apiAvisosByMateria = "https://jeancarlo.itesrc.net/api/Avisos/GetByMateria/";
+const API = "https://jeancarlo.itesrc.net/api";
 
 const feed = document.getElementById("divAvisos");
 const plantillaAviso = document.getElementById("plantillaAviso");
@@ -15,22 +12,19 @@ const materiasUsuario = "";
 
 const btnActualizar = document.getElementById("btnActualizar");
 
+let IdUsuario = 1;
+let Canal = "Canal General";
+
 btnActualizar.addEventListener("click", function (event) {
     mostrarAvisos();
     console.log("Actualizado prro");
 });
 
-localStorage.Canal = "Canal General";
-
-function pipo(name) {
+function cambioCanal(name) {
     console.log(name);
-    localStorage.Canal = name;
+    Canal = name;
     mostrarAvisos();
 }
-
-localStorage.idAlumno = 1;
-console.log(localStorage.idAlumno);
-
 
 function Newest(a, b) {
     return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
@@ -38,7 +32,7 @@ function Newest(a, b) {
 
 
 async function mostrarCanales() {
-    var result = await fetch(apiMaterias + localStorage.idAlumno);
+    var result = await fetch(API + "/AluXMat/GetByAlumno/" + IdUsuario);
     if (result.ok) {
         var datos = await result.json();
 
@@ -67,16 +61,15 @@ function mostrarCanalesNombres(datos) {
     datos.forEach((o, i) => {
         let div = menuChannels.children[i+1];
         div.children[0].innerHTML = o.nombreMateria;
+        div.children[0].value = o.nombreMateria;
     });
 }
 
 
-
-
 async function mostrarAvisos(materias) {
 
-    if (localStorage.Canal == "Canal General") {
-        var result = await fetch(apiMaterias + localStorage.idAlumno);
+    if (Canal == "Canal General") {
+        var result = await fetch(API + "/AluXMat/GetByAlumno/" + IdUsuario);
         if (result.ok) {
             var materias = await result.json();
         }
@@ -89,7 +82,7 @@ async function mostrarAvisos(materias) {
         var result = await fetch(url);
     }
     else {
-        var result = await fetch(apiAvisosByMateria + localStorage.Canal);
+        var result = await fetch(API + "/Avisos/GetByMateria/" + Canal);
     }
     
     if (result.ok) {
@@ -100,6 +93,7 @@ async function mostrarAvisos(materias) {
 
     }
 }
+
 
 function mostrarAvisosDatos(datos) {
     let cant = datos.length;
@@ -134,4 +128,3 @@ function mostrarAvisosDatos(datos) {
 
 
 mostrarCanales();
-mostrarAvisos();

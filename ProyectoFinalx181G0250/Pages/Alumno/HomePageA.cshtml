@@ -7,7 +7,7 @@
 
 <div id="divCanales">
     <div>
-        <button class="btnCanal" onclick="pipo(this.innerHTML)">Canal General</button>
+        <button class="btnCanal" value="Canal General" onclick="cambioCanal(this.value)">Canal General</button>
     </div>
 </div>
 
@@ -26,6 +26,8 @@
 </template>
 <template id="plantillaCanal">
     <div>
-        <button class="btnCanal" onclick="pipo(this.innerHTML)"></button>
+        <button class="btnCanal" onclick="cambioCanal(this.value)"></button>
     </div>
 </template>
+
+<script src="~/Scripts/AlumnoJs.js" type="text/javascript"></script>

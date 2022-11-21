@@ -37,6 +37,7 @@ namespace APIalumnos.Repositories
                 .Include(x => x.IdMateriaAvisoNavigation)
                 .Where(x => x.IdMateriaAvisoNavigation.NombreMateria == materia);
         }
+
         public IEnumerable<Avisostable> GetByMaterias(int[] materias)
         {
             return Context
@@ -44,6 +45,15 @@ namespace APIalumnos.Repositories
                 .Include(x => x.IdDocenteAvisoNavigation)
                 .Include(x => x.IdMateriaAvisoNavigation)
                 .Where(x => materias.Contains(x.IdMateriaAvisoNavigation.Id));
+        }
+
+        public IEnumerable<Avisostable> GetByDocente(int id)
+        {
+            return Context
+                .Set<Avisostable>()
+                .Include(x => x.IdDocenteAvisoNavigation)
+                .Include(x => x.IdMateriaAvisoNavigation)
+                .Where(x => x.IdDocenteAviso == id);
         }
 
         public override void Insert(Avisostable entity)

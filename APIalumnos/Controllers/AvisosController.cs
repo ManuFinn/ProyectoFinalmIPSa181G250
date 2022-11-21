@@ -106,6 +106,28 @@ namespace APIalumnos.Controllers
             }
         }
 
+        [HttpGet("GetByDocente/{id}")]
+        public IActionResult GetByDocente(int id)
+        {
+            var aviso = repo.GetByDocente(id);
+            if (aviso != null)
+            {
+                return Ok(aviso.Select(x => new
+                {
+                    x.Id,
+                    x.MensajeAviso,
+                    x.Fecha,
+                    x.FechaUltAct,
+                    x.IdDocenteAvisoNavigation.NombreDocente,
+                    x.IdMateriaAvisoNavigation.NombreMateria
+                }));
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody] Avisostable av)
         {
