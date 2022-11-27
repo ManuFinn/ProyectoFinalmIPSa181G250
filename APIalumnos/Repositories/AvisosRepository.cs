@@ -20,13 +20,15 @@ namespace APIalumnos.Repositories
                 .OrderBy(x=> x.Id);
         }
 
-        public IEnumerable<Avisostable> GetbyId(int id)
+
+
+        public Avisostable? GetbyId(int id)
         {
             return Context
                 .Set<Avisostable>()
                 .Include(x => x.IdDocenteAvisoNavigation)
                 .Include(x => x.IdMateriaAvisoNavigation)
-                .Where(x => x.Id == id);
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Avisostable> GetByMateria(string materia)

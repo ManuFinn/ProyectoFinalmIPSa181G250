@@ -23,6 +23,8 @@
         <label> </label>
         <label> </label>
         <label> </label>
+        <a href="javascript:" data-id="0" data-modal="modalEditar"> Editar </a>
+        <a href="javascript:" data-id="0" data-modal="modalEliminar"> Eliminar </a>
     </div>
 </template>
 <template id="plantillaCanal">
@@ -33,17 +35,39 @@
 
 <div class="modal" id="modalAgregar">
     <div>
+        <label>Mensaje</label>
         <form method="post" data-action="AgregarAviso">
-            <label>Mensaje</label>
-            <textarea name="avisoMensaje"></textarea>
+            
+            <textarea name="mensajeAviso"></textarea>
             <label>Materia:</label>
-            <select name="idMateria"></select>
+            <select name="idMateriaAviso"></select>
             <input type="submit" value="Agregar" />
             <input type="button" data-cancel="1" value="Cancelar" />
         </form>
     </div>
 </div>
 
+<div class="modal" id="modalEditar">
+    <div>
+        <label style="display:none;">Mensaje</label>
+        <form method="post" data-action="EditarAviso">
+            <textarea style="width:100%;" name="mensajeAviso"></textarea>
+            <select name="idMateriaAviso"></select>
+            <input type="submit" value="Agregar" />
+            <input type="button" data-cancel="1" value="Cancelar" />
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="modalEliminar">
+    <div>
+        <form method="post" data-action="EliminarAviso">
+            <label>Desea eliminar el aviso?</label>
+            <input type="submit" value="Agregar" />
+            <input type="button" data-cancel="1" value="Cancelar" />
+        </form>
+    </div>
+</div>
 
 
 <script src="~/Scripts/DocenteJs.js" type="text/javascript"></script>

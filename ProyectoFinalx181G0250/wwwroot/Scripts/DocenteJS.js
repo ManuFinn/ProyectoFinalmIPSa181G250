@@ -21,15 +21,59 @@ btnActualizar.addEventListener("click", function (event) {
     console.log("Actualizado prro");
 });
 
-document.addEventListener("click", function (event) {
+document.addEventListener("click", async function (event) {
     if (event.target.dataset.modal) {
-        document.getElementById(event.target.dataset.modal).style.display = "grid";
+        let modal = document.getElementById(event.target.dataset.modal)
+        var editar = event.target.dataset.modal.includes("Editar");
+        var idAviso = event.target.dataset.id;
+        if (editar) {
+            let res = await fetch(API + "/Avisos/GetById/" + idAviso);
+            if (res.ok) {
+                let aviso = await res.json();
+                console.log(aviso);
+                let form = modal.querySelector("Form");
+
+                form.elements[0].value = aviso["mensajeAviso"];
+
+            }
+        }
+        modal.style.display = "grid";
         return;
     }
     if (event.target.dataset.cancel) {
         event.target.closest(".modal").style.display = "none";
     }
 });
+
+
+
+document.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    let form = event.target;
+    let json = Object.fromEntries(new FormData(form));
+    json["idDocenteAviso"] = IdUsuario;
+    console.log(json);
+    let resp = await fetch(API + "/Avisos/" + form.dataset.action, {
+        method: form.method,
+        body: JSON.stringify(json),
+        headers: {
+            "content-type": "application/json"
+            }
+    })
+
+    if (resp.ok) {
+        form.reset();
+        form.closest(".modal").style.display = "none";
+        mostrarAvisos();
+    }
+    else {
+        let text = await resp.text();
+        alert(text);
+    }
+});
+
+
 
 function cambioCanal(name) {
     console.log(name);
@@ -52,7 +96,7 @@ async function mostrarCanales() {
             return 0;
         });
 
-        var select = document.querySelectorAll("[name=idMateria]")
+        var select = document.querySelectorAll("[name=idMateriaAviso]")
 
         select.forEach((x => {
             datos.forEach(t => {
@@ -107,7 +151,7 @@ function mostrarAvisosDatos(datos) {
     let cant = datos.length;
     if (cant > feed.children.length) {
         let n = cant - feed.children.length;
-        for (var x = 0; x <= n; x++) {
+        for (var x = 0; x < n; x++) {
             var clone = plantillaAviso.content.children[0].cloneNode(true);
             feed.append(clone);
         }
@@ -130,7 +174,8 @@ function mostrarAvisosDatos(datos) {
             div.children[1].innerHTML = o.fecha;
         }
         div.children[2].innerHTML = o.mensajeAviso;
-
+        div.children[3].dataset.id = o.id;
+        div.children[4].dataset.id = o.id;
     });
 }
 

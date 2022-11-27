@@ -43,15 +43,16 @@ namespace APIalumnos.Controllers
             var aviso = repo.GetbyId(id);
             if (aviso != null)
             {
-                return Ok(aviso.Select(x => new
+                return Ok(new
                 {
-                    x.Id,
-                    x.MensajeAviso,
-                    x.Fecha,
-                    x.FechaUltAct,
-                    x.IdDocenteAvisoNavigation.NombreDocente,
-                    x.IdMateriaAvisoNavigation.NombreMateria
-                }));
+                    aviso.Id,
+                    aviso.MensajeAviso,
+                    aviso.Fecha,
+                    aviso.FechaUltAct,
+                    aviso.IdDocenteAviso,
+                    aviso.IdDocenteAvisoNavigation.NombreDocente,
+                    aviso.IdMateriaAvisoNavigation.NombreMateria
+                });
             }
             else
             {
@@ -128,7 +129,7 @@ namespace APIalumnos.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("AgregarAviso")]
         public IActionResult Post([FromBody] Avisostable av)
         {
             try
