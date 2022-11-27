@@ -155,7 +155,7 @@ namespace APIalumnos.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("EditarAviso")]
         public IActionResult Put([FromBody] Avisostable av)
         {
             try
@@ -182,7 +182,7 @@ namespace APIalumnos.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("EliminarAviso")]
         public IActionResult Delete([FromBody] Avisostable av)
         {
             try

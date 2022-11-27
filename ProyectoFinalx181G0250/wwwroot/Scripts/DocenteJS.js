@@ -21,11 +21,13 @@ btnActualizar.addEventListener("click", function (event) {
     console.log("Actualizado prro");
 });
 
+let idAviso;
+
 document.addEventListener("click", async function (event) {
     if (event.target.dataset.modal) {
         let modal = document.getElementById(event.target.dataset.modal)
-        var editar = event.target.dataset.modal.includes("Editar");
-        var idAviso = event.target.dataset.id;
+        let editar = event.target.dataset.modal.includes("Editar");
+        idAviso = event.target.dataset.id;
         if (editar) {
             let res = await fetch(API + "/Avisos/GetById/" + idAviso);
             if (res.ok) {
@@ -49,13 +51,27 @@ document.addEventListener("click", async function (event) {
 
 document.addEventListener("submit", async function (event) {
     event.preventDefault();
-
     let form = event.target;
     let json = Object.fromEntries(new FormData(form));
-    json["idDocenteAviso"] = IdUsuario;
+    
+    var metodo;
+
+    if (form.dataset.action == "AgregarAviso") {
+        metodo = "post";
+        json["idDocenteAviso"] = IdUsuario;
+    }
+    else if (form.dataset.action == "EditarAviso") {
+        metodo = "put";
+        json["id"] = idAviso;
+    }
+    else {
+        metodo = "delete"; 
+        json["id"] = idAviso;
+    }
+    
     console.log(json);
     let resp = await fetch(API + "/Avisos/" + form.dataset.action, {
-        method: form.method,
+        method: metodo,
         body: JSON.stringify(json),
         headers: {
             "content-type": "application/json"
@@ -63,6 +79,7 @@ document.addEventListener("submit", async function (event) {
     })
 
     if (resp.ok) {
+        idAviso = 0;
         form.reset();
         form.closest(".modal").style.display = "none";
         mostrarAvisos();
