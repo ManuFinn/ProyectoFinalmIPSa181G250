@@ -95,6 +95,7 @@ document.addEventListener("submit", async function (event) {
 function cambioCanal(name) {
     console.log(name);
     Canal = name;
+    holaMundo(name);
     mostrarAvisos();
 }
 
@@ -155,6 +156,7 @@ async function mostrarAvisos() {
         var datos = await result.json();
 
         datos.sort(Newest);
+        console.log(datos);
         mostrarAvisosDatos(datos);
 
     }
@@ -162,6 +164,25 @@ async function mostrarAvisos() {
 
 function Newest(a, b) {
     return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
+}
+
+function getFirstLetters(str) {
+    const firstLetter = str
+        .split(' ')
+        .map(word => word[0])
+        .join('');
+    const SecondLetter = str
+        .split(' ')
+        .map(word => word[0])
+        .join(''); 
+
+    return firstLetter[0] + SecondLetter[2];
+}
+
+function getMonthName(monthNumber) {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+    return date.toLocaleString('es-MX', { month: 'long' });
 }
 
 function mostrarAvisosDatos(datos) {
@@ -182,17 +203,28 @@ function mostrarAvisosDatos(datos) {
 
     datos.forEach((o, i) => {
         let div = feed.children[i];
-
-        div.children[0].innerHTML = o.nombreDocente;
+        div.children[0].innerHTML = getFirstLetters(o.nombreDocente);
+        div.children[1].innerHTML = o.nombreDocente;
         if (o.fechaUltAct) {
-            div.children[1].innerHTML = o.fechaUltAct + "(Editado)";
+            const date = new Date(o.fechaUltAct);
+            var dia = date.getDate();
+            var mes = date.getMonth();
+            var ano = date.getFullYear();
+            var fecha = dia + " de " + getMonthName(mes) + " del " + ano + " (Editado)";
+            div.children[2].innerHTML = fecha;
         }
         else {
-            div.children[1].innerHTML = o.fecha;
+            const date = new Date(o.fecha);
+            var dia = date.getDate();
+            var mes = date.getMonth();
+            var ano = date.getFullYear();
+            var fecha = dia + " de " + getMonthName(mes) + " del " + ano;
+            div.children[2].innerHTML = fecha;
         }
-        div.children[2].innerHTML = o.mensajeAviso;
-        div.children[3].dataset.id = o.id;
-        div.children[4].dataset.id = o.id;
+        div.children[3].innerHTML = o.nombreMateria;
+        div.children[4].innerHTML = o.mensajeAviso;
+        div.children[5].dataset.id = o.id;
+        div.children[6].dataset.id = o.id;
     });
 }
 

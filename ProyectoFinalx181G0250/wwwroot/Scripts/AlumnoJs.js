@@ -94,12 +94,31 @@ async function mostrarAvisos(materias) {
     }
 }
 
+function getFirstLetters(str) {
+    const firstLetter = str
+        .split(' ')
+        .map(word => word[0])
+        .join('');
+    const SecondLetter = str
+        .split(' ')
+        .map(word => word[0])
+        .join('');
+
+    return firstLetter[0] + SecondLetter[2];
+}
+
+function getMonthName(monthNumber) {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+    return date.toLocaleString('es-MX', { month: 'long' });
+}
+
 
 function mostrarAvisosDatos(datos) {
     let cant = datos.length;
     if (cant > feed.children.length) {
         let n = cant - feed.children.length;
-        for (var x = 0; x <= n; x++) {
+        for (var x = 0; x < n; x++) {
             var clone = plantillaAviso.content.children[0].cloneNode(true);
             feed.append(clone);
         }
@@ -113,16 +132,26 @@ function mostrarAvisosDatos(datos) {
 
     datos.forEach((o, i) => {
         let div = feed.children[i];
-
-        div.children[0].innerHTML = o.nombreDocente;
+        div.children[0].innerHTML = getFirstLetters(o.nombreDocente);
+        div.children[1].innerHTML = o.nombreDocente;
         if (o.fechaUltAct) {
-            div.children[1].innerHTML = o.fechaUltAct + "(Editado)";
+            const date = new Date(o.fechaUltAct);
+            var dia = date.getDate();
+            var mes = date.getMonth();
+            var ano = date.getFullYear();
+            var fecha = dia + " de " + getMonthName(mes) + " del " + ano + " (Editado)";
+            div.children[2].innerHTML = fecha;
         }
         else {
-            div.children[1].innerHTML = o.fecha;
+            const date = new Date(o.fecha);
+            var dia = date.getDate();
+            var mes = date.getMonth();
+            var ano = date.getFullYear();
+            var fecha = dia + " de " + getMonthName(mes) + " del " + ano;
+            div.children[2].innerHTML = fecha;
         }
-        div.children[2].innerHTML = o.mensajeAviso;
-
+        div.children[3].innerHTML = o.nombreMateria;
+        div.children[4].innerHTML = o.mensajeAviso;
     });
 }
 

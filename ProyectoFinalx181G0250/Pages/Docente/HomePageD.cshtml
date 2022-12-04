@@ -14,17 +14,23 @@
 <form>
     <input type="button" value="Agregar" data-modal="modalAgregar" />
 </form>
-<div id="divAvisos">
+<div id="divAvisos" class="listaAvisos">
 
 </div>
 
 <template id="plantillaAviso"> 
-    <div>
-        <label> </label>
-        <label> </label>
-        <label> </label>
-        <a href="javascript:" data-id="0" data-modal="modalEditar"> Editar </a>
-        <a href="javascript:" data-id="0" data-modal="modalEliminar"> Eliminar </a>
+    <div class="baseAviso">
+        <span> </span>
+        <label class="docenteAviso"> </label>
+        <label class="fechaAviso"> </label>
+        <label class="materiaAviso"> </label>
+        <label class="mensajeAviso"> </label>
+        <a href="javascript:" data-id="0" data-modal="modalEditar">
+            <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+        <a href="javascript:" data-id="0" data-modal="modalEliminar">
+            <i class="fas fa-trash"></i>
+            </a>
     </div>
 </template>
 <template id="plantillaCanal">
@@ -71,3 +77,4 @@
 
 
 <script src="~/Scripts/DocenteJs.js" type="text/javascript"></script>
+<script src="https://kit.fontawesome.com/1fb484f5a2.js" crossorigin="anonymous"></script>
