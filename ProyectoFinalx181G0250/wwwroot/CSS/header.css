@@ -1,0 +1,32 @@
+﻿body {
+    background-color: mediumseagreen;
+    margin-left: 23%;
+    margin-right: 23%;
+}
+
+
+header {
+    background-color: white;
+    display: grid;
+    grid-template-columns: 8% auto 48px;
+    grid-template-rows: 100%;
+    height: 55px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+}
+header a {
+    text-align:center; 
+    font-size: 26px;
+    line-height:55px;
+    color: #00A3F8;
+}
+header h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-top:5px;
+    line-height: 40px;
+    color: #1E1E1E;
+}
+header span {
+    text-align:center; 
+}

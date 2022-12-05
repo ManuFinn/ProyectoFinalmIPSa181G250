@@ -1,0 +1,31 @@
+﻿.menuCanales {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 54%;
+    height: 100%;
+    background-color: white;
+    display: none;
+    margin-left: 23%;
+    margin-right: 23%;
+    margin-top: 57px;
+    grid-auto-rows: 50px;
+    padding-top: 30px;
+}
+
+.menuCanales div button {
+    width:100%;
+    height:100%;
+    border: none;
+    background-color: white;
+    font-size: 26px;
+}
+.menuCanales div button:hover {
+    background-color: #00A3F842;
+}
+.menuCanales div button.select {
+    background-color: #00A3F882;
+    color: white;
+    font-weight: bold;
+}
+

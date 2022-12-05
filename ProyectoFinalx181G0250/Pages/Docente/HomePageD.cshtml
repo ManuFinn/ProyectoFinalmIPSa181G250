@@ -4,16 +4,18 @@
     Layout = "_Layout";
 }
 
-<div id="divCanales">
+<div id="divCanales" class="menuCanales">
     <div>
-        <button class="btnCanal" value="Canal General" onclick="cambioCanal(this.value)">Canal General</button>
+        <button class="btnCanal select" id="Canal General" value="Canal General" onclick="cambioCanal(this.id)">Canal General</button>
     </div>
 </div>
 
-<button id="btnActualizar"> Actualizar </button>
-<form>
-    <input type="button" value="Agregar" data-modal="modalAgregar" />
-</form>
+<div>
+    <button class="float" value="Agregar" data-modal="modalAgregar">
+        <i class="fas fa-plus"></i>
+    </button>
+</div>
+
 <div id="divAvisos" class="listaAvisos">
 
 </div>
@@ -27,15 +29,15 @@
         <label class="mensajeAviso"> </label>
         <a href="javascript:" data-id="0" data-modal="modalEditar">
             <i class="fa-solid fa-pen-to-square"></i>
-            </a>
+        </a>
         <a href="javascript:" data-id="0" data-modal="modalEliminar">
             <i class="fas fa-trash"></i>
-            </a>
+        </a>
     </div>
 </template>
 <template id="plantillaCanal">
     <div>
-        <button class="btnCanal" onclick="cambioCanal(this.value)"></button>
+        <button class="btnCanal" onclick="cambioCanal(this.id)"></button>
     </div>
 </template>
 

@@ -14,12 +14,12 @@ const btnActualizar = document.getElementById("btnActualizar");
 
 let IdUsuario = 1;
 let Canal = "Canal General";
+let btnCanal = document.getElementById("Canal General");
 
-
-btnActualizar.addEventListener("click", function (event) {
+var actualizar = window.setInterval(function () {
     mostrarAvisos();
-    console.log("Actualizado prro");
-});
+}, 5000);
+
 
 let idAviso;
 
@@ -32,7 +32,6 @@ document.addEventListener("click", async function (event) {
             let res = await fetch(API + "/Avisos/GetById/" + idAviso);
             if (res.ok) {
                 let aviso = await res.json();
-                console.log(aviso);
                 let form = modal.querySelector("Form");
 
                 form.elements[0].value = aviso["mensajeAviso"];
@@ -46,6 +45,8 @@ document.addEventListener("click", async function (event) {
         event.target.closest(".modal").style.display = "none";
     }
 });
+
+
 
 
 
@@ -92,10 +93,13 @@ document.addEventListener("submit", async function (event) {
 
 
 
-function cambioCanal(name) {
-    console.log(name);
-    Canal = name;
-    holaMundo(name);
+function cambioCanal(btn) {
+    btnCanal.classList.toggle("select");
+    btnCanal = document.getElementById(btn);
+    btnCanal.classList.toggle("select");
+    Canal = btnCanal.value;
+    changeChannelName(btnCanal.value);
+    ocultarMenu();
     mostrarAvisos();
 }
 
@@ -140,7 +144,9 @@ function mostrarCanalesNombres(datos) {
         let div = menuChannels.children[i + 1];
         div.children[0].innerHTML = o.nombreMateria;
         div.children[0].value = o.nombreMateria;
+        div.children[0].id = o.nombreMateria;
     });
+    menuChannels.style.display = "none";
 }
 
 async function mostrarAvisos() {
@@ -156,9 +162,7 @@ async function mostrarAvisos() {
         var datos = await result.json();
 
         datos.sort(Newest);
-        console.log(datos);
         mostrarAvisosDatos(datos);
-
     }
 }
 
