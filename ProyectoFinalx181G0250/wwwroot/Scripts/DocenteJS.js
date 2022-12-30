@@ -185,7 +185,8 @@ function getFirstLetters(str) {
 
 function getMonthName(monthNumber) {
     const date = new Date();
-    date.setMonth(monthNumber - 1);
+    monthNumber + 1;
+    date.setMonth(monthNumber);
     return date.toLocaleString('es-MX', { month: 'long' });
 }
 

@@ -10,19 +10,22 @@ const plantillaCanal = document.getElementById("plantillaCanal");
 
 const materiasUsuario = "";
 
-const btnActualizar = document.getElementById("btnActualizar");
-
 let IdUsuario = 1;
 let Canal = "Canal General";
+let btnCanal = document.getElementById("Canal General");
 
-btnActualizar.addEventListener("click", function (event) {
+var actualizar = window.setInterval(function () {
     mostrarAvisos();
-    console.log("Actualizado prro");
-});
+}, 5000);
 
-function cambioCanal(name) {
-    console.log(name);
-    Canal = name;
+
+function cambioCanal(btn) {
+    btnCanal.classList.toggle("select");
+    btnCanal = document.getElementById(btn);
+    btnCanal.classList.toggle("select");
+    Canal = btnCanal.value;
+    changeChannelName(btnCanal.value);
+    ocultarMenu();
     mostrarAvisos();
 }
 
@@ -62,6 +65,7 @@ function mostrarCanalesNombres(datos) {
         let div = menuChannels.children[i+1];
         div.children[0].innerHTML = o.nombreMateria;
         div.children[0].value = o.nombreMateria;
+        div.children[0].id = o.nombreMateria;
     });
 }
 
