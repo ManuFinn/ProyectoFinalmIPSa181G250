@@ -228,8 +228,8 @@ function mostrarAvisosDatos(datos) {
         }
         div.children[3].innerHTML = o.nombreMateria;
         div.children[4].innerHTML = o.mensajeAviso;
-        div.children[5].dataset.id = o.id;
-        div.children[6].dataset.id = o.id;
+        div.children[5].children[0].dataset.id = o.id;
+        div.children[6].children[0].dataset.id = o.id;
     });
 }
 

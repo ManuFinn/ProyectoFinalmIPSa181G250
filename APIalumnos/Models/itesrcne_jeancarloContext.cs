@@ -25,10 +25,7 @@ namespace APIalumnos.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-               optionsBuilder.UseMySql("server=204.93.216.11;database=itesrcne_jeancarlo;user=itesrcne_jeancar;password=2G@4ykMwqR3xyCZ", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.3.29-mariadb"));
-            }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -140,7 +137,6 @@ namespace APIalumnos.Models
                 entity.HasOne(d => d.IdMateriaAvisoNavigation)
                     .WithMany(p => p.Avisostable)
                     .HasForeignKey(d => d.IdMateriaAviso)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_avisostable_materiastable");
             });
 

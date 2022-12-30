@@ -32,7 +32,7 @@ namespace APIalumnos.Controllers
                 x.Fecha,
                 x.FechaUltAct,
                 x.IdDocenteAvisoNavigation.NombreDocente,
-                x.IdMateriaAvisoNavigation.NombreMateria
+                x.IdMateriaAvisoNavigation.NombreMateria,
             }
             ));
         }

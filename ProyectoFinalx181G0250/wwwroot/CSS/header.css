@@ -2,6 +2,7 @@
     background-color: mediumseagreen;
     margin-left: 23%;
     margin-right: 23%;
+    font-family: sans-serif;
 }
 
 
@@ -20,13 +21,14 @@ header a {
     line-height:55px;
     color: #00A3F8;
 }
-header h1 {
-    font-size: 24px;
-    text-align: center;
-    margin-top:5px;
-    line-height: 40px;
-    color: #1E1E1E;
-}
+    header h1 {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 5px;
+        line-height: 40px;
+        color: #1E1E1E;
+        font-family: sans-serif;
+    }
 header span {
     text-align:center; 
 }

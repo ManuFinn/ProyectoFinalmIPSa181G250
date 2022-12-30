@@ -25,10 +25,6 @@ namespace APIalumnos.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-               optionsBuilder.UseMySql("server=127.0.0.1;database=tec;user=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.10.1-mariadb"));
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
