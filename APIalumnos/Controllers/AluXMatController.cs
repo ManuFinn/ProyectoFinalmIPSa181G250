@@ -8,11 +8,11 @@ namespace APIalumnos.Controllers
     [ApiController] 
     public class AluXMatController : ControllerBase 
     {
-        public tecContext Context { get; set; }
+        public itesrcne_jeancarloContext Context { get; set; }
 
         AlumnosXMateriasRepository repo;
 
-        public AluXMatController(tecContext con)
+        public AluXMatController(itesrcne_jeancarloContext con)
         {
             Context = con;
             repo = new AlumnosXMateriasRepository(Context);

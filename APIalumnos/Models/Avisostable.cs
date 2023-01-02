@@ -11,7 +11,7 @@ namespace APIalumnos.Models
         public string MensajeAviso { get; set; }
         public DateTime? Fecha { get; set; }
         public DateTime? FechaUltAct { get; set; }
-        public int? IdMateriaAviso { get; set; }
+        public int IdMateriaAviso { get; set; }
         public int IdDocenteAviso { get; set; }
 
         public virtual Docentestable IdDocenteAvisoNavigation { get; set; }

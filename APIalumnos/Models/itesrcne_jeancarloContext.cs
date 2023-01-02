@@ -22,6 +22,7 @@ namespace APIalumnos.Models
         public virtual DbSet<Avisostable> Avisostable { get; set; }
         public virtual DbSet<Docentestable> Docentestable { get; set; }
         public virtual DbSet<Materiastable> Materiastable { get; set; }
+        public virtual DbSet<Mensajestable> Mensajestable { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -137,6 +138,7 @@ namespace APIalumnos.Models
                 entity.HasOne(d => d.IdMateriaAvisoNavigation)
                     .WithMany(p => p.Avisostable)
                     .HasForeignKey(d => d.IdMateriaAviso)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_avisostable_materiastable");
             });
 
@@ -194,6 +196,47 @@ namespace APIalumnos.Models
                     .HasForeignKey(d => d.IdProfesorMateria)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_materiastable_docentestable");
+            });
+
+            modelBuilder.Entity<Mensajestable>(entity =>
+            {
+                entity.ToTable("mensajestable");
+
+                entity.HasIndex(e => e.IdAlumno, "FK__alumnostable");
+
+                entity.HasIndex(e => e.IdDocente, "FK__docentestable");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Fecha)
+                    .HasColumnType("timestamp")
+                    .ValueGeneratedOnAddOrUpdate()
+                    .HasColumnName("fecha")
+                    .HasDefaultValueSql("current_timestamp()");
+
+                entity.Property(e => e.IdAlumno).HasColumnType("int(11)");
+
+                entity.Property(e => e.IdDocente).HasColumnType("int(11)");
+
+                entity.Property(e => e.Mensaje)
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnName("mensaje")
+                    .HasDefaultValueSql("''");
+
+                entity.HasOne(d => d.IdAlumnoNavigation)
+                    .WithMany(p => p.Mensajestable)
+                    .HasForeignKey(d => d.IdAlumno)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_mensajestable_alumnostable");
+
+                entity.HasOne(d => d.IdDocenteNavigation)
+                    .WithMany(p => p.Mensajestable)
+                    .HasForeignKey(d => d.IdDocente)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_mensajestable_docentestable");
             });
 
             OnModelCreatingPartial(modelBuilder);

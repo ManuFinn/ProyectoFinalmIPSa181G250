@@ -8,12 +8,12 @@ namespace APIalumnos.Controllers
     [ApiController]
     public class MateriasController : ControllerBase
     {
-        public tecContext Context { get; set; }
+        public itesrcne_jeancarloContext Context { get; set; }
 
 
         MateriasRepository repo;
 
-        public MateriasController(tecContext con)
+        public MateriasController(itesrcne_jeancarloContext con)
         {
             Context = con;
             repo = new MateriasRepository(Context);

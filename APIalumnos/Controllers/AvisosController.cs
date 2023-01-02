@@ -11,11 +11,11 @@ namespace APIalumnos.Controllers
     [ApiController]
     public class AvisosController : ControllerBase
     {
-        public tecContext Context { get; set; }
+        public itesrcne_jeancarloContext Context { get; set; }
 
         AvisosRepository repo;
 
-        public AvisosController(tecContext con)
+        public AvisosController(itesrcne_jeancarloContext con)
         {
             Context = con;
             repo = new AvisosRepository(Context);

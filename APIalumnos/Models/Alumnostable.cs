@@ -10,6 +10,7 @@ namespace APIalumnos.Models
         public Alumnostable()
         {
             Alumnoxmateriatable = new HashSet<Alumnoxmateriatable>();
+            Mensajestable = new HashSet<Mensajestable>();
         }
 
         public int Id { get; set; }
@@ -19,5 +20,6 @@ namespace APIalumnos.Models
         public bool Borrado { get; set; }
 
         public virtual ICollection<Alumnoxmateriatable> Alumnoxmateriatable { get; set; }
+        public virtual ICollection<Mensajestable> Mensajestable { get; set; }
     }
 }

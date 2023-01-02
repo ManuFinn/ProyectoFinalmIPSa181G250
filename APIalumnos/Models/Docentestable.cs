@@ -11,6 +11,7 @@ namespace APIalumnos.Models
         {
             Avisostable = new HashSet<Avisostable>();
             Materiastable = new HashSet<Materiastable>();
+            Mensajestable = new HashSet<Mensajestable>();
         }
 
         public int Id { get; set; }
@@ -21,5 +22,6 @@ namespace APIalumnos.Models
 
         public virtual ICollection<Avisostable> Avisostable { get; set; }
         public virtual ICollection<Materiastable> Materiastable { get; set; }
+        public virtual ICollection<Mensajestable> Mensajestable { get; set; }
     }
 }

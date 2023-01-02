@@ -5,11 +5,7 @@ using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddDbContext<FestifyContext>(opt =>
-//opt.UseSqlServer(
-//            Configuration.GetConnectionString("Festify")));
-
-builder.Services.AddDbContext<tecContext>(opt =>
+builder.Services.AddDbContext<itesrcne_jeancarloContext>(opt =>
 opt.UseMySql("server=204.93.216.11;database=itesrcne_jeancarlo;user=itesrcne_jeancar;password=2G@4ykMwqR3xyCZ", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.10.1-mariadb")));
 
 builder.Services.AddCors();

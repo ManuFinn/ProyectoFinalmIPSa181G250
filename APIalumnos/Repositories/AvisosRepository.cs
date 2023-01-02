@@ -10,7 +10,6 @@ namespace APIalumnos.Repositories
     {
         public AvisosRepository(DbContext context) : base(context) { }
 
-        //Context.Table.Include(x => x.NavigationProperty).LinqMethod(...);
 
         public override IEnumerable<Avisostable> GetAll()
         {
@@ -85,7 +84,7 @@ namespace APIalumnos.Repositories
 
             if (string.IsNullOrEmpty(entity.MensajeAviso))
             {
-                validationErrors.Add("Error 418. Prepara esas nalgas porque...");
+                validationErrors.Add("Error 418...");
             }
             return validationErrors.Count == 0;
         }
