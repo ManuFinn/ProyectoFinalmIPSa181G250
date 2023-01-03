@@ -9,7 +9,7 @@
 header {
     background-color: white;
     display: grid;
-    grid-template-columns: 8% auto 48px;
+    grid-template-columns: 8% auto 8%;
     grid-template-rows: 100%;
     height: 55px;
     border-radius: 7px;
@@ -20,9 +20,14 @@ header a {
     font-size: 26px;
     line-height:55px;
     color: #00A3F8;
+    transition: 1s;
+}
+header a:hover {
+    transform:scale(1.2);
+    transition: 1s;
 }
     header h1 {
-        font-size: 24px;
+        font-size: 22px;
         text-align: center;
         margin-top: 5px;
         line-height: 40px;

@@ -4,21 +4,27 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link href="~/CSS/General.css" rel="stylesheet" />
     <link href="~/CSS/modal.css" rel="stylesheet" />
     <link href="~/CSS/aviso.css" rel="stylesheet" />
     <link href="~/CSS/header.css" rel="stylesheet" />
     <link href="~/CSS/menu.css" rel="stylesheet" />
     <link href="~/CSS/Float.css" rel="stylesheet" />
+    <link href="~/CSS/Movil.css" rel="stylesheet" />
     <link href="~/manifest.json" rel="manifest" />
     <link href="~/android/android-launchericon-512-512.png" rel="icon"/>
 </head>
 <body>
     <header>
-        <a href="javascript:" data-id="0" data-menu="menuAbrir">
-            <i class="fa-solid fa-bars"></i>
+        <a href="javascript:" data-id="0" data-menu="menu">
+            <i class="fa-solid fa-bars" data-id="0" data-menu="menu"></i>
         </a>
+
         <h1 id="TituloCanal" class="canalActual"> Canal General</h1>
-        <span> </span>
+
+        <a href="javascript:" data-id="0" data-mensajes="mensajes">
+            <i class="fa-regular fa-message" data-id="0" data-mensajes="mensajes"></i>
+        </a>
     </header>
     <div>
         @RenderBody()

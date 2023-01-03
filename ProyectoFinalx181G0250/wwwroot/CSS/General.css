@@ -1,0 +1,11 @@
+﻿body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+html, body {
+    -webkit-scroll-behavior: smooth;
+    -moz-scroll-behavior: smooth;
+    -ms-scroll-behavior: smooth;
+    scroll-behavior: smooth;
+    transition: 2s;
+}

@@ -47,9 +47,6 @@ document.addEventListener("click", async function (event) {
 });
 
 
-
-
-
 document.addEventListener("submit", async function (event) {
     event.preventDefault();
     let form = event.target;
@@ -90,8 +87,6 @@ document.addEventListener("submit", async function (event) {
         alert(text);
     }
 });
-
-
 
 function cambioCanal(btn) {
     btnCanal.classList.toggle("select");

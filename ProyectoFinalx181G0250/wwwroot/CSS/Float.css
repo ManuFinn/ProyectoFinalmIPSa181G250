@@ -2,11 +2,39 @@
     position: fixed;
     width: 90px;
     height: 90px;
-    bottom: 40px;
-    right: 40px;
-    background-color: #0C9;
+    bottom: 20px;
+    right: 10px;
+    background-color: #00A3F8;
     color: #FFF;
     border-radius: 50px;
+    border: solid 3px #FFF;
     text-align: center;
-    cursor:pointer;
+    cursor: pointer;
+    font-size: 35px;
+    transition: 1s;
+}
+.float:hover {
+    transform:scale(1.1);
+    transition: 1s;
+}
+.back {
+    position: fixed;
+    width: 100px;
+    height: 45px;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: center;
+    background-color: #00A3F8;
+    color: #FFF;
+    border-radius: 50px;
+    border: solid 3px #FFF;
+    text-align: center;
+    cursor: pointer;
+    font-size: 35px;
+    transition: 1s;
+}
+.back:hover {
+    transform: scale(1.1) translateX(-50%);
+    transition: 1s;
 }

@@ -12,7 +12,13 @@
 
 <div>
     <button class="float" value="Agregar" data-modal="modalAgregar">
-        <i class="fas fa-plus"></i>
+        <i class="fas fa-plus" value="Agregar" data-modal="modalAgregar"></i>
+    </button>
+</div>
+
+<div>
+    <button id="back" class="back">
+        <i class="fa-solid fa-arrow-up"></i>
     </button>
 </div>
 
@@ -43,26 +49,29 @@
 
 <div class="modal" id="modalAgregar">
     <div>
-        <label>Mensaje</label>
+        <h2> Nuevo Aviso</h2>
+        
         <form method="post" data-action="AgregarAviso">
-            
-            <textarea name="mensajeAviso"></textarea>
-            <label>Materia:</label>
-            <select name="idMateriaAviso"></select>
-            <input type="submit" value="Agregar" />
+            <textarea name="mensajeAviso" resize="none"></textarea>
+            <select name="idMateriaAviso">
+                <option value="none" selected disabled hidden>Seleccionar materia</option>
+            </select>
             <input type="button" data-cancel="1" value="Cancelar" />
+            <input type="submit" value="Agregar" />
+            
         </form>
     </div>
 </div>
 
 <div class="modal" id="modalEditar">
     <div>
+        <h2> Nuevo Aviso</h2>
         <label style="display:none;">Mensaje</label>
         <form method="post" data-action="EditarAviso">
-            <textarea style="width:100%;" name="mensajeAviso"></textarea>
+            <textarea name="mensajeAviso" resize="none"></textarea>
             <select name="idMateriaAviso"></select>
-            <input type="submit" value="Editar" />
             <input type="button" data-cancel="1" value="Cancelar" />
+            <input type="submit" value="Editar" />
         </form>
     </div>
 </div>

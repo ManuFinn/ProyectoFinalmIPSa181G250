@@ -1,0 +1,15 @@
+﻿@media only screen and (max-width: 850px) {
+    body, .menuCanales {
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+    .menuCanales {
+        position: fixed;
+        width:96%;
+    }
+    .modal {
+        grid-template-columns: 1% auto 1%;
+        grid-template-rows: 5% auto 50%;
+    }
+}
+

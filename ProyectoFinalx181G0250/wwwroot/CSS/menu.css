@@ -11,6 +11,11 @@
     margin-top: 57px;
     grid-auto-rows: 50px;
     padding-top: 30px;
+    overflow-y:auto;
+}
+.menuCanales::-webkit-scrollbar{
+    height:0;
+    width: 0;
 }
 
 .menuCanales div button {
