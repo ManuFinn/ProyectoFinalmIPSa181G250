@@ -5,10 +5,14 @@ const apiAvisosByMateria = "https://jeancarlo.itesrc.net/api/Avisos/GetByMateria
 const feed = document.getElementById("divAvisos");
 const plantillaAviso = document.getElementById("plantillaAviso");
 
-
 const menuChannels = document.getElementById("divCanales");
 const plantillaCanal = document.getElementById("plantillaCanal");
 
+const mensajesPrivados = document.getElementById("divUsuarios")
+const historial = document.getElementById("historial");
+const listaUs = document.getElementById("listaUsuarios");
+const plantillaUsuario = document.getElementById("plantillaUsAlumno");
+const plantillaMensaje = document.getElementById("plantillaMensaje");
 
 const btnActualizar = document.getElementById("btnActualizar");
 
@@ -16,8 +20,12 @@ let IdUsuario = 1;
 let Canal = "Canal General";
 let btnCanal = document.getElementById("Canal General");
 
+const currentTime = Date.now();
+const oneDayInMilliseconds = 86400000 / 2;
+
 var actualizar = window.setInterval(function () {
     mostrarAvisos();
+    mostrarUsuarios();
 }, 5000);
 
 
@@ -46,45 +54,66 @@ document.addEventListener("click", async function (event) {
     }
 });
 
-
 document.addEventListener("submit", async function (event) {
     event.preventDefault();
     let form = event.target;
-    let json = Object.fromEntries(new FormData(form));
-    
-    var metodo;
-
-    if (form.dataset.action == "AgregarAviso") {
-        metodo = "post";
-        json["idDocenteAviso"] = IdUsuario;
-    }
-    else if (form.dataset.action == "EditarAviso") {
-        metodo = "put";
-        json["id"] = idAviso;
-    }
-    else {
-        metodo = "delete"; 
-        json["id"] = idAviso;
-    }
-    
-    console.log(json);
-    let resp = await fetch(API + "/Avisos/" + form.dataset.action, {
-        method: metodo,
-        body: JSON.stringify(json),
-        headers: {
-            "content-type": "application/json"
+    if (form.dataset.action === "AgregarMensaje") {
+        let json = Object.fromEntries(new FormData(form));
+        var metodo = "post";
+        json["idDocente"] = IdUsuario;
+        let resp = await fetch(API + "/Mensajes/" + form.dataset.action, {
+            method: metodo,
+            body: JSON.stringify(json),
+            headers: {
+                "content-type": "application/json"
             }
-    })
-
-    if (resp.ok) {
-        idAviso = 0;
-        form.reset();
-        form.closest(".modal").style.display = "none";
-        mostrarAvisos();
+        })
+        if (resp.ok) {
+            idAviso = 0;
+            form.reset();
+            form.closest(".modal").style.display = "none";
+            mostrarAvisos();
+        }
+        else {
+            let text = await resp.text();
+            alert(text);
+        }
     }
     else {
-        let text = await resp.text();
-        alert(text);
+        let json = Object.fromEntries(new FormData(form));
+
+        var metodo;
+
+        if (form.dataset.action == "AgregarAviso") {
+            metodo = "post";
+            json["idDocenteAviso"] = IdUsuario;
+        }
+        else if (form.dataset.action == "EditarAviso") {
+            metodo = "put";
+            json["id"] = idAviso;
+        }
+        else {
+            metodo = "delete";
+            json["id"] = idAviso;
+        }
+        let resp = await fetch(API + "/Avisos/" + form.dataset.action, {
+            method: metodo,
+            body: JSON.stringify(json),
+            headers: {
+                "content-type": "application/json"
+            }
+        })
+
+        if (resp.ok) {
+            idAviso = 0;
+            form.reset();
+            form.closest(".modal").style.display = "none";
+            mostrarAvisos();
+        }
+        else {
+            let text = await resp.text();
+            alert(text);
+        }
     }
 });
 
@@ -97,6 +126,119 @@ function cambioCanal(btn) {
     ocultarMenu();
     mostrarAvisos();
 }
+
+async function mostrarUsuarios() {
+    var result = await fetch(API + "/Mensajes/GetByDocente/" + IdUsuario);
+    if (result.ok) {
+        var datos = await result.json();
+        const Us = datos.reverse().filter((obj, index, self) => {
+            const duplicate = self.find((t) => t.Fecha === obj.Fecha && t.idAlumno === obj.idAlumno);
+            return index === self.indexOf(duplicate);
+        });
+        Us.sort(Newest);
+        let selecto = document.getElementById("idAlumno");
+        Us.forEach(t => {
+            var opt = document.createElement("option");
+            opt.value = t.idAlumno;
+            opt.innerHTML = t.nombreAlumno;
+            selecto.options.add(opt);
+        });
+        mostrarMensajes(Us);
+    }
+   
+}
+
+function mostrarMensajes(Us) {
+    let cant = Us.length;
+    if (cant > listaUs.children.length) {
+        let n = cant - listaUs.children.length;
+        for (var x = 0; x < n; x++) {
+            var clone = plantillaUsuario.content.children[0].cloneNode(true);
+            listaUs.append(clone);
+        }
+    }
+    else if (cant < listaUs.children.length) {
+        let n = listaUs.children.length - cant;
+        for (var x = 0; x < n; x++) {
+            listaUs.lastChild.remove();
+        }
+    }
+
+    Us.forEach((o, i) => {
+        let div = listaUs.children[i];
+        div.dataset.id = o.idAlumno;
+        div.children[0].innerHTML = getFirstLetters(o.nombreAlumno);
+        div.children[0].dataset.id = o.idAlumno;
+        div.children[1].innerHTML = o.nombreAlumno;
+        div.children[1].dataset.id = o.idAlumno;
+        div.children[2].innerHTML = truncateLabel(o.mensaje, 20);
+        div.children[2].dataset.id = o.idAlumno;
+        var date = new Date(o.fecha);
+        if (currentTime - date < oneDayInMilliseconds) {
+            var hora = date.getHours();
+            var min = date.getMinutes();
+            var hoy = hora + ":" + min;
+            div.children[3].innerHTML = hoy;
+        } else {
+
+            var dia = date.getDate();
+            var mes = date.getMonth();
+            var ano = date.getFullYear();
+            var fecha = dia + " de " + getMonthName(mes) + " del " + ano;
+            div.children[3].innerHTML = fecha;
+        }
+        div.children[3].dataset.id = o.idAlumno;
+        
+    });
+}
+
+async function cargarMensajesPrivados(event) {
+    var result = await fetch(API + "/Mensajes/DocenteByAlumno/" + IdUsuario + "-" + event.target.dataset.id);
+    if (result.ok) {
+        var datos = await result.json();
+        mostrarHistorial(datos);
+    }
+}
+
+function mostrarHistorial(datos) {
+    let cant = datos.length;
+    if (cant > historial.children.length) {
+        let n = cant - historial.children.length;
+        for (var x = 0; x < n; x++) {
+            var clone = plantillaMensaje.content.children[0].cloneNode(true);
+            historial.append(clone);
+        }
+    }
+    else if (cant < historial.children.length) {
+        let n = historial.children.length - cant;
+        for (var x = 0; x < n; x++) {
+            historial.lastChild.remove();
+        }
+    }
+
+    datos.forEach((o, i) => {
+        let div = historial.children[i];
+        div.children[0].innerHTML = o.mensaje;
+
+        var date = new Date(o.fecha);
+
+        if (currentTime - date < oneDayInMilliseconds) {
+            var hora = date.getHours();
+            var min = date.getMinutes();
+            var hoy = hora + ":" + min;
+            div.children[1].innerHTML = hoy;
+        } else {
+
+            var dia = date.getDate();
+            var mes = date.getMonth();
+            var ano = date.getFullYear();
+            var fecha = dia + " de " + getMonthName(mes) + " del " + ano;
+            div.children[1].innerHTML = fecha;
+        }
+    });
+}
+
+mostrarUsuarios();
 
 async function mostrarCanales() {
     var result = await fetch(API + "/Materias/GetByDocente/" + IdUsuario);
@@ -177,6 +319,22 @@ function getFirstLetters(str) {
 
     return firstLetter[0] + SecondLetter[2];
 }
+
+function truncateLabel(label, maxLength) {
+    if (label.length > maxLength) {
+        const words = label.split(" ");
+        let truncatedLabel = "";
+        let i = 0;
+        while (truncatedLabel.length < maxLength) {
+            truncatedLabel += words[i] + " ";
+            i++;
+        }
+        return truncatedLabel.trim() + "...";
+    }
+    return label;
+}
+
+const label = document.getElementById("myLabel");
 
 function getMonthName(monthNumber) {
     const date = new Date();

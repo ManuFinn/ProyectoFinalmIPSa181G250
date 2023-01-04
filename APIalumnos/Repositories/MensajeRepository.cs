@@ -15,6 +15,33 @@ namespace APIalumnos.Repositories
                 .OrderBy(x => x.Id);
         }
 
+        public IEnumerable<Mensajestable> GetByDocente(int idDocente)
+        {
+            return Context
+                 .Set<Mensajestable>()
+                 .Include(x => x.IdDocenteNavigation)
+                 .Include(x => x.IdAlumnoNavigation)
+                 .Where(x => x.IdDocente == idDocente);
+        }
+
+        public IEnumerable<Mensajestable> GetByAlumno(int idAlumno)
+        {
+            return Context
+                .Set<Mensajestable>()
+                .Include(x => x.IdDocenteNavigation)
+                .Include(x => x.IdAlumnoNavigation)
+                .Where(x => x.IdAlumno == idAlumno);
+        }
+
+        public IEnumerable<Mensajestable> DocenteByAlumno(int idAlumno, int idDocente)
+        {
+            return Context
+                .Set<Mensajestable>()
+                .Include(x => x.IdDocenteNavigation)
+                .Include(x => x.IdAlumnoNavigation)
+                .Where(x => x.IdAlumno == idAlumno && x.IdDocente == idDocente);
+        }
+
         public override void Insert(Mensajestable entity)
         {
             entity.Fecha = DateTime.Now.ToMexicoTime().AddHours(-1);

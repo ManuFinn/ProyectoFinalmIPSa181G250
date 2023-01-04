@@ -1,11 +1,11 @@
 ﻿@media only screen and (max-width: 850px) {
-    body, .menuCanales {
+    body, .menuCanales, .mensajesPrivados {
         margin-left: 2%;
         margin-right: 2%;
     }
-    .menuCanales {
+    .menuCanales, .mensajesPrivados {
         position: fixed;
-        width:96%;
+        width: 96%;
     }
     .modal {
         grid-template-columns: 1% auto 1%;

@@ -29,10 +29,80 @@ namespace APIalumnos.Controllers
                 x.Id,
                 x.Mensaje,
                 x.Fecha,
+                x.IdDocente,
                 x.IdDocenteNavigation.NombreDocente,
+                x.IdAlumno,
                 x.IdAlumnoNavigation.NombreAlumno,
             }
             ));
+        }
+
+        [HttpGet("GetByDocente/{idDocente}")]
+        public IActionResult GetByDocente(int idDocente)
+        {
+            var aviso = repo.GetByDocente(idDocente);
+            if (aviso != null)
+            {
+                return Ok(aviso.Select(x => new
+                {
+                    x.Id,
+                    x.Mensaje,
+                    x.Fecha,
+                    x.IdDocenteNavigation.NombreDocente,
+                    x.IdAlumno,
+                    x.IdAlumnoNavigation.NombreAlumno,
+                }));
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("GetByAlumno/{idAlumno}")]
+        public IActionResult GetByAlumno(int idAlumno)
+        {
+            var aviso = repo.GetByAlumno(idAlumno);
+            if (aviso != null)
+            {
+                return Ok(aviso.Select(x => new
+                {
+                    x.Id,
+                    x.Mensaje,
+                    x.Fecha,
+                    x.IdDocente,
+                    x.IdDocenteNavigation.NombreDocente,
+                    x.IdAlumno,
+                    x.IdAlumnoNavigation.NombreAlumno,
+                }));
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("DocenteByAlumno/{idDocente}-{idAlumno}")]
+        public IActionResult DocenteByAlumno(int idAlumno, int idDocente)
+        {
+            var aviso = repo.DocenteByAlumno(idAlumno, idDocente);
+            if (aviso != null)
+            {
+                return Ok(aviso.Select(x => new
+                {
+                    x.Id,
+                    x.Mensaje,
+                    x.Fecha,
+                    x.IdDocente,
+                    x.IdDocenteNavigation.NombreDocente,
+                    x.IdAlumno,
+                    x.IdAlumnoNavigation.NombreAlumno,
+                }));
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost("AgregarMensaje")]
@@ -48,8 +118,8 @@ namespace APIalumnos.Controllers
                         mv.Id,
                         mv.Fecha,
                         mv.Mensaje,
-                        mv.IdDocenteNavigation.NombreDocente,
-                        mv.IdAlumnoNavigation.NombreAlumno,
+                        mv.IdDocente,
+                        mv.IdAlumno,
                     });
                 }
                 else { return Ok(); }

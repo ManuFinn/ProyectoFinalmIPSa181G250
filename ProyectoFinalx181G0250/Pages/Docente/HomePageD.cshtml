@@ -10,10 +10,15 @@
     </div>
 </div>
 
-<div>
-    <button class="float" value="Agregar" data-modal="modalAgregar">
-        <i class="fas fa-plus" value="Agregar" data-modal="modalAgregar"></i>
-    </button>
+<div id="divUsuarios" class="mensajesPrivados">
+    <div id="listaUsuarios" class="mAlumnos">
+
+    </div>
+    <div id="chat" class="chat">
+        <div  id="historial" class="his">
+
+        </div>
+    </div>
 </div>
 
 <div>
@@ -47,15 +52,63 @@
     </div>
 </template>
 
+
+<template id="plantillaUsAlumno">
+    <a data-chat="abreChat">
+        <span data-chat="abreChat"> </span>
+        <label data-chat="abreChat"></label>
+        <label data-chat="abreChat"></label>
+        <label data-chat="abreChat"></label>
+    </a>
+</template>
+<template id="plantillaMensaje">
+    <div>
+        <label></label>
+        <label></label>
+    </div>
+</template>
+
+<div class="fabs" onclick="toggleBtn()">
+    <div class="action">
+        <i class="fas fa-plus" id="add"></i>
+        <i class="fas fa-times" id="remove" style="display: none"></i>
+    </div>
+
+    <div class="btns">
+        <a  href="#" class="btn" value="Agregar" data-modal="modalAgregar">
+            <i class="fa-regular fa-envelope" value="Agregar" data-modal="modalAgregar"></i>
+        </a>
+        <a href="#" class="btn" value="Agregar" data-mensaje="mensajeAgregar">
+            <i class="fa-solid fa-comment-dots" value="Agregar" data-mensaje="mensajeAgregar"></i>
+        </a>
+    </div>
+</div>
+
+<div class="modal" id="mensajeAgregar">
+    <div>
+        <h2> Nuevo mensaje</h2>
+
+        <form method="post" data-action="AgregarMensaje">
+            <select id="idAlumno" name="idAlumno">
+                <option value="none" selected disabled hidden>Seleccionar alumno</option>
+            </select>
+            <textarea name="mensaje" resize="none"></textarea>
+            <input type="button" data-cancel="1" value="Cancelar" />
+            <input type="submit" value="Agregar" />
+
+        </form>
+    </div>
+</div>
+
 <div class="modal" id="modalAgregar">
     <div>
         <h2> Nuevo Aviso</h2>
         
         <form method="post" data-action="AgregarAviso">
-            <textarea name="mensajeAviso" resize="none"></textarea>
             <select name="idMateriaAviso">
                 <option value="none" selected disabled hidden>Seleccionar materia</option>
             </select>
+            <textarea name="mensajeAviso" resize="none"></textarea>
             <input type="button" data-cancel="1" value="Cancelar" />
             <input type="submit" value="Agregar" />
             
@@ -68,8 +121,8 @@
         <h2> Nuevo Aviso</h2>
         <label style="display:none;">Mensaje</label>
         <form method="post" data-action="EditarAviso">
-            <textarea name="mensajeAviso" resize="none"></textarea>
             <select name="idMateriaAviso"></select>
+            <textarea name="mensajeAviso" resize="none"></textarea>
             <input type="button" data-cancel="1" value="Cancelar" />
             <input type="submit" value="Editar" />
         </form>

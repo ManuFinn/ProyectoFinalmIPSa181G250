@@ -1,0 +1,86 @@
+﻿.mensajesPrivados {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 54%;
+    height: 100%;
+    background-color: white;
+    display: none;
+    margin-left: 23%;
+    margin-right: 23%;
+    margin-top: 57px;
+    grid-auto-rows: 50px;
+    padding-top: 30px;
+    overflow-y: auto;
+    grid-template-columns: 30% auto;
+    grid-template-rows: auto;
+}
+.mAlumnos {
+    display:flex;
+    flex-direction:column;
+}
+.mAlumnos a {
+    display: grid;
+   height:50px;
+    grid-template-columns: 50px auto;
+    grid-template-rows: 33% 33% 33%;
+} 
+.mAlumnos a:hover {
+    background-color: #00A3F842;
+    cursor: pointer;
+}
+.mAlumnos span {
+    margin: 3px;
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-row-end:4;
+    font-size:25px;
+    line-height:40px;
+        text-align: center;
+        border-radius: 4px;
+        color: white;
+        background-color: #0DB9AE;
+        border: solid 3px #0DB9AE;
+        box-sizing: border-box;
+}
+.mAlumnos a label:nth-child(2) {
+  font-weight:bold;
+  font-size: 14px;
+}
+.mAlumnos a label:nth-child(3) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+.mAlumnos a label:nth-child(4) {
+  font-size: 10px;
+}
+
+
+.chat {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+}
+.his div {
+    background: rgba(13, 185, 174, 0.3);
+    border-radius: 4px;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height:35px;
+    padding: 5px;
+}
+.his div label:first-child {
+    font-size:16px;
+}
+.his div label:last-child {
+    font-size:12px;
+    font-weight: bold;
+}

@@ -5,12 +5,28 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<div>
+    <button id="back" class="back">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+</div>
+
 <div id="divCanales" class="menuCanales">
     <div>
         <button class="btnCanal select" id="Canal General" value="Canal General" onclick="cambioCanal(this.id)">Canal General</button>
     </div>
 </div>
 
+<div id="divUsuarios" class="mensajesPrivados">
+    <div id="listaUsuarios" class="mAlumnos">
+
+    </div>
+    <div id="chat" class="chat">
+        <div  id="historial" class="his">
+
+        </div>
+    </div>
+</div>
 
 <div id="divAvisos" class="listaAvisos">
 
@@ -28,6 +44,20 @@
 <template id="plantillaCanal">
     <div>
         <button class="btnCanal" onclick="cambioCanal(this.id)"></button>
+    </div>
+</template>
+<template id="plantillaUsAlumno">
+    <a data-chat="abreChat">
+        <span data-chat="abreChat"> </span>
+        <label data-chat="abreChat"></label>
+        <label data-chat="abreChat"></label>
+        <label data-chat="abreChat"></label>
+    </a>
+</template>
+<template id="plantillaMensaje">
+    <div>
+        <label></label>
+        <label></label>
     </div>
 </template>
 

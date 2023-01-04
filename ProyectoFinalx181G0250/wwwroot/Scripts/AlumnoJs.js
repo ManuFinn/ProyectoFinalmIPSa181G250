@@ -8,6 +8,12 @@ const plantillaAviso = document.getElementById("plantillaAviso");
 const menuChannels = document.getElementById("divCanales");
 const plantillaCanal = document.getElementById("plantillaCanal");
 
+const mensajesPrivados = document.getElementById("divUsuarios")
+const historial = document.getElementById("historial");
+const listaUs = document.getElementById("listaUsuarios");
+const plantillaUsuario = document.getElementById("plantillaUsAlumno");
+const plantillaMensaje = document.getElementById("plantillaMensaje");
+
 const materiasUsuario = "";
 
 let IdUsuario = 1;
@@ -69,6 +75,101 @@ function mostrarCanalesNombres(datos) {
     });
 }
 
+mostrarUsuarios();
+
+async function mostrarUsuarios() {
+    var result = await fetch(API + "/Mensajes/GetByAlumno/" + IdUsuario);
+    if (result.ok) {
+        var datos = await result.json();
+        const Us = datos.reverse().filter((obj, index, self) => {
+            const duplicate = self.find((t) => t.Fecha === obj.Fecha && t.idDocente === obj.idDocente);
+            return index === self.indexOf(duplicate);
+        });
+        Us.sort(Newest);
+        mostrarMensajes(Us);
+    }
+
+}
+
+function mostrarMensajes(Us) {
+    let cant = Us.length;
+    if (cant > listaUs.children.length) {
+        let n = cant - listaUs.children.length;
+        for (var x = 0; x < n; x++) {
+            var clone = plantillaUsuario.content.children[0].cloneNode(true);
+            listaUs.append(clone);
+        }
+    }
+    else if (cant < listaUs.children.length) {
+        let n = listaUs.children.length - cant;
+        for (var x = 0; x < n; x++) {
+            listaUs.lastChild.remove();
+        }
+    }
+
+    Us.forEach((o, i) => {
+        let div = listaUs.children[i];
+        div.dataset.id = o.idDocente;
+        div.children[0].innerHTML = getFirstLetters(o.nombreDocente);
+        div.children[0].dataset.id = o.idDocente;
+        div.children[1].innerHTML = o.nombreDocente;
+        div.children[1].dataset.id = o.idDocente;
+        div.children[2].innerHTML = truncateLabel(o.mensaje, 20);
+        div.children[2].dataset.id = o.idDocente;
+        div.children[3].innerHTML = o.fecha;
+        div.children[3].dataset.id = o.idDocente;
+
+    });
+}
+
+async function cargarMensajesPrivados(event) {
+    var result = await fetch(API + "/Mensajes/DocenteByAlumno/" + event.target.dataset.id + "-" + IdUsuario);
+    if (result.ok) {
+        var datos = await result.json();
+        mostrarHistorial(datos);
+    }
+}
+
+function mostrarHistorial(datos) {
+    let cant = datos.length;
+    if (cant > historial.children.length) {
+        let n = cant - historial.children.length;
+        for (var x = 0; x < n; x++) {
+            var clone = plantillaMensaje.content.children[0].cloneNode(true);
+            historial.append(clone);
+        }
+    }
+    else if (cant < historial.children.length) {
+        let n = historial.children.length - cant;
+        for (var x = 0; x < n; x++) {
+            historial.lastChild.remove();
+        }
+    }
+
+    datos.forEach((o, i) => {
+        let div = historial.children[i];
+        div.children[0].innerHTML = o.mensaje;
+
+        var date = new Date(o.fecha);
+        const currentTime = Date.now();
+        const oneDayInMilliseconds = 86400000 / 2;
+
+        if (currentTime - date < oneDayInMilliseconds) {
+            var hora = date.getHours();
+            var min = date.getMinutes();
+            var hoy = hora + ":" + min;
+            div.children[1].innerHTML = hoy;
+        } else {
+
+            var dia = date.getDate();
+            var mes = date.getMonth();
+            var ano = date.getFullYear();
+            var fecha = dia + " de " + getMonthName(mes) + " del " + ano;
+            div.children[1].innerHTML = fecha;
+        }
+    });
+}
+
 
 async function mostrarAvisos(materias) {
 
@@ -115,6 +216,20 @@ function getMonthName(monthNumber) {
     const date = new Date();
     date.setMonth(monthNumber - 1);
     return date.toLocaleString('es-MX', { month: 'long' });
+}
+
+function truncateLabel(label, maxLength) {
+    if (label.length > maxLength) {
+        const words = label.split(" ");
+        let truncatedLabel = "";
+        let i = 0;
+        while (truncatedLabel.length < maxLength) {
+            truncatedLabel += words[i] + " ";
+            i++;
+        }
+        return truncatedLabel.trim() + "...";
+    }
+    return label;
 }
 
 

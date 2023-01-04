@@ -9,3 +9,24 @@ html, body {
     scroll-behavior: smooth;
     transition: 2s;
 }
+
+.selector {
+    background-color: #0DB9AE;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    height: 30%;
+    width: 60%;
+    border-radius: 10px;
+}
+.selector a {
+    color: #FFF;
+    text-decoration: none;
+    font-size: 40px;
+    text-align:center;
+}
+.selector a:hover {
+    background-color: #FFF;
+    color: #0DB9AE
+}
