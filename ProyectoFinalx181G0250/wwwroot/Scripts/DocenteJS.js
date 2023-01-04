@@ -136,13 +136,19 @@ async function mostrarUsuarios() {
             return index === self.indexOf(duplicate);
         });
         Us.sort(Newest);
-        let selecto = document.getElementById("idAlumno");
-        Us.forEach(t => {
-            var opt = document.createElement("option");
-            opt.value = t.idAlumno;
-            opt.innerHTML = t.nombreAlumno;
-            selecto.options.add(opt);
-        });
+
+        var listaAlumnos = await fetch(API + "/Alumnos/");
+        if (listaAlumnos.ok) {
+            var nA = await listaAlumnos.json();
+
+            let selecto = document.getElementById("idAlumno");
+            nA.forEach(t => {
+                var opt = document.createElement("option");
+                opt.value = t.id;
+                opt.innerHTML = t.nombreAlumno;
+                selecto.options.add(opt);
+            });
+        }
         mostrarMensajes(Us);
     }
    
