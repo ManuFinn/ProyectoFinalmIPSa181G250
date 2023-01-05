@@ -127,6 +127,22 @@ function cambioCanal(btn) {
     mostrarAvisos();
 }
 
+async function cargarAlumnos() {
+    var listaAlumnos = await fetch(API + "/Alumnos/");
+    if (listaAlumnos.ok) {
+        var nA = await listaAlumnos.json();
+
+        let selecto = document.getElementById("idAlumno");
+        nA.forEach(t => {
+            var opt = document.createElement("option");
+            opt.value = t.id;
+            opt.innerHTML = t.nombreAlumno;
+            selecto.options.add(opt);
+        });
+    }
+}
+cargarAlumnos();
+
 async function mostrarUsuarios() {
     var result = await fetch(API + "/Mensajes/GetByDocente/" + IdUsuario);
     if (result.ok) {
@@ -137,18 +153,7 @@ async function mostrarUsuarios() {
         });
         Us.sort(Newest);
 
-        var listaAlumnos = await fetch(API + "/Alumnos/");
-        if (listaAlumnos.ok) {
-            var nA = await listaAlumnos.json();
-
-            let selecto = document.getElementById("idAlumno");
-            nA.forEach(t => {
-                var opt = document.createElement("option");
-                opt.value = t.id;
-                opt.innerHTML = t.nombreAlumno;
-                selecto.options.add(opt);
-            });
-        }
+        
         mostrarMensajes(Us);
     }
    
@@ -375,17 +380,26 @@ function mostrarAvisosDatos(datos) {
             var mes = date.getMonth();
             var ano = date.getFullYear();
             var fecha = dia + " de " + getMonthName(mes) + " del " + ano + " (Editado)";
-            div.children[2].innerHTML = fecha;
+            div.children[3].innerHTML = fecha;
         }
         else {
-            const date = new Date(o.fecha);
-            var dia = date.getDate();
-            var mes = date.getMonth();
-            var ano = date.getFullYear();
-            var fecha = dia + " de " + getMonthName(mes) + " del " + ano;
-            div.children[2].innerHTML = fecha;
+            var date = new Date(o.fecha);
+
+            if (currentTime - date < oneDayInMilliseconds) {
+                var hora = date.getHours();
+                var min = date.getMinutes();
+                var hoy = hora + ":" + min;
+                div.children[3].innerHTML = hoy;
+            } else {
+
+                var dia = date.getDate();
+                var mes = date.getMonth();
+                var ano = date.getFullYear();
+                var fecha = dia + " de " + getMonthName(mes) + " del " + ano;
+                div.children[3].innerHTML = fecha;
+            }
         }
-        div.children[3].innerHTML = o.nombreMateria;
+        div.children[2].innerHTML = o.nombreMateria;
         div.children[4].innerHTML = o.mensajeAviso;
         div.children[5].children[0].dataset.id = o.id;
         div.children[6].children[0].dataset.id = o.id;

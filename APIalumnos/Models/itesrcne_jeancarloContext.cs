@@ -26,7 +26,6 @@ namespace APIalumnos.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -212,9 +211,7 @@ namespace APIalumnos.Models
 
                 entity.Property(e => e.Fecha)
                     .HasColumnType("timestamp")
-                    .ValueGeneratedOnAddOrUpdate()
-                    .HasColumnName("fecha")
-                    .HasDefaultValueSql("current_timestamp()");
+                    .HasColumnName("fecha");
 
                 entity.Property(e => e.IdAlumno).HasColumnType("int(11)");
 

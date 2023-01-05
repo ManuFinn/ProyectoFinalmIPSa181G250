@@ -20,6 +20,9 @@ let IdUsuario = 1;
 let Canal = "Canal General";
 let btnCanal = document.getElementById("Canal General");
 
+const currentTime = Date.now();
+const oneDayInMilliseconds = 86400000 / 2;
+
 var actualizar = window.setInterval(function () {
     mostrarAvisos();
 }, 5000);
@@ -259,17 +262,26 @@ function mostrarAvisosDatos(datos) {
             var mes = date.getMonth();
             var ano = date.getFullYear();
             var fecha = dia + " de " + getMonthName(mes) + " del " + ano + " (Editado)";
-            div.children[2].innerHTML = fecha;
+            div.children[3].innerHTML = fecha;
         }
         else {
-            const date = new Date(o.fecha);
-            var dia = date.getDate();
-            var mes = date.getMonth();
-            var ano = date.getFullYear();
-            var fecha = dia + " de " + getMonthName(mes) + " del " + ano;
-            div.children[2].innerHTML = fecha;
+            var date = new Date(o.fecha);
+
+            if (currentTime - date < oneDayInMilliseconds) {
+                var hora = date.getHours();
+                var min = date.getMinutes();
+                var hoy = hora + ":" + min;
+                div.children[3].innerHTML = hoy;
+            } else {
+
+                var dia = date.getDate();
+                var mes = date.getMonth();
+                var ano = date.getFullYear();
+                var fecha = dia + " de " + getMonthName(mes) + " del " + ano;
+                div.children[3].innerHTML = fecha;
+            }
         }
-        div.children[3].innerHTML = o.nombreMateria;
+        div.children[2].innerHTML = o.nombreMateria;
         div.children[4].innerHTML = o.mensajeAviso;
     });
 }

@@ -9,7 +9,7 @@ namespace APIalumnos.Models
     {
         public int Id { get; set; }
         public string Mensaje { get; set; }
-        public DateTime Fecha { get; set; }
+        public DateTime? Fecha { get; set; }
         public int IdDocente { get; set; }
         public int IdAlumno { get; set; }
 
